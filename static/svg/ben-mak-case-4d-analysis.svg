@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <style>
+      @keyframes moveRight {
+        from { transform: translateX(0); }
+        to { transform: translateX(300px); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .moving-dot { animation: moveRight 10s linear infinite; }
+      .fading-text { animation: fadeIn 2s ease-in-out infinite alternate; }
+    </style>
+  </defs>
+  
+  <rect width="800" height="600" fill="#f0f0f0"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold">Ben Mak Case 4D Analysis</text>
+  
+  <!-- Language Intensity Chart (Revised) -->
+  <g transform="translate(50,50)">
+    <text x="175" y="0" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold">Language Intensity Over Time</text>
+    <line x1="0" y1="150" x2="350" y2="150" stroke="black" stroke-width="1"/>
+    <line x1="0" y1="150" x2="0" y2="10" stroke="black" stroke-width="1"/>
+    <polyline points="0,140 117,120 233,80 350,20" fill="none" stroke="#FF5722" stroke-width="2"/>
+    <polyline points="0,145 117,135 233,115 350,85" fill="none" stroke="#2196F3" stroke-width="2"/>
+    <text x="0" y="165" font-family="Arial" font-size="10">Mar '21</text>
+    <text x="117" y="165" font-family="Arial" font-size="10">Sep '21</text>
+    <text x="233" y="165" font-family="Arial" font-size="10">Mar '22</text>
+    <text x="350" y="165" font-family="Arial" font-size="10">Nov '22</text>
+    <text x="360" y="20" font-family="Arial" font-size="10" fill="#FF5722">Emphatic</text>
+    <text x="360" y="85" font-family="Arial" font-size="10" fill="#2196F3">Urgency</text>
+  </g>
+  
+  <!-- Sentiment Analysis Chart -->
+  <g transform="translate(450,50)">
+    <text x="150" y="0" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold">Sentiment Analysis</text>
+    <line x1="0" y1="150" x2="300" y2="150" stroke="black" stroke-width="1"/>
+    <line x1="0" y1="150" x2="0" y2="10" stroke="black" stroke-width="1"/>
+    <polyline points="0,140 100,75 200,105 300,140" fill="none" stroke="#4CAF50" stroke-width="2"/>
+    <polyline points="0,140 100,140 200,125 300,80" fill="none" stroke="#FFC107" stroke-width="2"/>
+    <polyline points="0,140 100,140 200,125 300,20" fill="none" stroke="#FF5722" stroke-width="2"/>
+    <text x="0" y="165" font-family="Arial" font-size="10">Mar '21</text>
+    <text x="100" y="165" font-family="Arial" font-size="10">Sep '21</text>
+    <text x="200" y="165" font-family="Arial" font-size="10">Mar '22</text>
+    <text x="300" y="165" font-family="Arial" font-size="10">Nov '22</text>
+    <text x="310" y="140" font-family="Arial" font-size="10" fill="#4CAF50">Positive</text>
+    <text x="310" y="125" font-family="Arial" font-size="10" fill="#FFC107">Neutral</text>
+    <text x="310" y="110" font-family="Arial" font-size="10" fill="#FF5722">Negative</text>
+  </g>
+  
+  <!-- 4D Moving Infographic -->
+  <g transform="translate(50,250)">
+    <text x="350" y="0" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold">4D Case Progression</text>
+    <line x1="0" y1="100" x2="700" y2="100" stroke="black" stroke-width="1"/>
+    <text x="0" y="115" font-family="Arial" font-size="10">Mar '21</text>
+    <text x="233" y="115" font-family="Arial" font-size="10">Sep '21</text>
+    <text x="466" y="115" font-family="Arial" font-size="10">Mar '22</text>
+    <text x="700" y="115" font-family="Arial" font-size="10">Nov '22</text>
+    
+    <!-- Moving elements -->
+    <circle class="moving-dot" cx="0" cy="100" r="5" fill="#4CAF50"/>
+    <circle class="moving-dot" cx="0" cy="100" r="5" fill="#FFC107" style="animation-delay: 2s;"/>
+    <circle class="moving-dot" cx="0" cy="100" r="5" fill="#FF5722" style="animation-delay: 4s;"/>
+    
+    <!-- Fading text elements -->
+    <text x="350" y="50" font-family="Arial" font-size="12" text-anchor="middle" class="fading-text" fill="#4CAF50">Cooperation</text>
+    <text x="350" y="70" font-family="Arial" font-size="12" text-anchor="middle" class="fading-text" fill="#FFC107" style="animation-delay: 2s;">Frustration</text>
+    <text x="350" y="90" font-family="Arial" font-size="12" text-anchor="middle" class="fading-text" fill="#FF5722" style="animation-delay: 4s;">Desperation</text>
+  </g>
+  
+  <!-- Key Metrics Summary -->
+  <g transform="translate(50,400)">
+    <text x="350" y="0" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold">Key Metrics Summary</text>
+    <text x="0" y="30" font-family="Arial" font-size="12">Total Communications: 32</text>
+    <text x="0" y="50" font-family="Arial" font-size="12">Consent Attempts: 7</text>
+    <text x="0" y="70" font-family="Arial" font-size="12">Advocacy Success Rate: 11%</text>
+    <text x="350" y="30" font-family="Arial" font-size="12">Avg. Response Time: 5.3 days</text>
+    <text x="350" y="50" font-family="Arial" font-size="12">Document Acceptance Rate: 64%</text>
+    <text x="350" y="70" font-family="Arial" font-size="12">Policy Consistency: 57%</text>
+  </g>
+</svg>

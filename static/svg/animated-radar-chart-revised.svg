@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip">
+      <circle cx="250" cy="250" r="220"/>
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#clip)">
+    <!-- Background circles -->
+    <circle cx="250" cy="250" r="220" fill="none" stroke="#ccc" stroke-width="1"/>
+    <circle cx="250" cy="250" r="165" fill="none" stroke="#ccc" stroke-width="1"/>
+    <circle cx="250" cy="250" r="110" fill="none" stroke="#ccc" stroke-width="1"/>
+    <circle cx="250" cy="250" r="55" fill="none" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Axis lines -->
+    <line x1="250" y1="30" x2="250" y2="470" stroke="#ccc" stroke-width="1"/>
+    <line x1="30" y1="250" x2="470" y2="250" stroke="#ccc" stroke-width="1"/>
+    <line x1="70" y1="70" x2="430" y2="430" stroke="#ccc" stroke-width="1"/>
+    <line x1="430" y1="70" x2="70" y2="430" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Threshold area -->
+    <path d="M250,140 L360,250 L250,360 L140,250 Z" fill="rgba(255,99,132,0.2)" stroke="rgb(255,99,132)" stroke-width="2" filter="url(#glow)">
+      <animate attributeName="d" dur="3s" repeatCount="indefinite"
+        values="M250,140 L360,250 L250,360 L140,250 Z;
+                M250,130 L370,250 L250,370 L130,250 Z;
+                M250,140 L360,250 L250,360 L140,250 Z"/>
+    </path>
+    
+    <!-- Valeria Behavior area -->
+    <path d="M250,50 L414,204 L292,382 L158,310 L188,110 Z" fill="rgba(54,162,235,0.2)" stroke="rgb(54,162,235)" stroke-width="2" filter="url(#glow)">
+      <animate attributeName="d" dur="3s" repeatCount="indefinite"
+        values="M250,50 L414,204 L292,382 L158,310 L188,110 Z;
+                M250,40 L424,194 L302,392 L148,320 L178,100 Z;
+                M250,50 L414,204 L292,382 L158,310 L188,110 Z"/>
+    </path>
+    
+    <!-- Labels -->
+    <text x="250" y="20" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="black">Intimidation</text>
+    <text x="480" y="255" text-anchor="start" font-family="Arial" font-size="16" font-weight="bold" fill="black">Gaslighting</text>
+    <text x="250" y="480" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="black">Isolation</text>
+    <text x="20" y="255" text-anchor="end" font-family="Arial" font-size="16" font-weight="bold" fill="black">Control</text>
+    <text x="425" y="75" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="black">Manipulation</text>
+    
+    <!-- Glowing center point -->
+    <circle cx="250" cy="250" r="5" fill="url(#glowGradient)">
+      <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Legend -->
+  <rect x="20" y="20" width="20" height="10" fill="rgba(255,99,132,0.2)" stroke="rgb(255,99,132)"/>
+  <text x="45" y="30" font-family="Arial" font-size="14" fill="black">Threshold</text>
+  <rect x="20" y="40" width="20" height="10" fill="rgba(54,162,235,0.2)" stroke="rgb(54,162,235)"/>
+  <text x="45" y="50" font-family="Arial" font-size="14" fill="black">Valeria's Behavior</text>
+</svg>

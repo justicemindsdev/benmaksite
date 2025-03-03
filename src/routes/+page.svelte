@@ -5,6 +5,7 @@
 
 <LoadingScreen />
 <Navbar />
+<!-- <div class="w-100 h-100 bg-radial from-blue-900 from-2% to-black absolute top-20 right-20  rounded-full animate-pulse"></div> -->
 <section class="text-gray-400 bg-gray-950 body-font border m-2 border-gray-700 rounded-xl">
     <div class="container mx-auto flex px-5 py-10 md:flex-row flex-col items-center">
       <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 md:mb-0 mb-10">

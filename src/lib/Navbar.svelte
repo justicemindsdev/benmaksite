@@ -1,13 +1,13 @@
 <header class="text-gray-400 bg-gradient-to-r from-black m-2 rounded-xl via-blue-950 to-black border-b border-gray-700">
-    <div class=" w-full flex flex-wrap px-5 py-4 flex-col md:flex-row items-center">
-      <a href="/" class="flex title-font items-center text-white mb-4 md:mb-0 ">
-        <img src="/logosm.png" class="w-[50px]" alt="">
-        <div class="flex flex-col">
+    <div class=" w-full flex flex-wrap  flex-col md:flex-row items-center">
+      <a href="/" class="flex pl-5 title-font items-center text-white mb-4 md:mb-0 ">
+        <img src="/Logo%20final/Logo-with-crown.png" class="w-[100px]" alt="">
+        <!-- <div class="flex flex-col">
             <span class="ml-3 text-xl">Justice Minds</span>
             <span class="ml-3 text-xs font-thin text-gray-400">Official Govt Portal</span>
-        </div>
+        </div> -->
       </a>
-      <nav data-sveltekit-reload class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+      <nav data-sveltekit-reload class="md:ml-auto px-5 py-4 flex flex-wrap items-center text-base justify-center">
         <a href="/" class="mr-5 hover:text-white">Ben Mak Home</a>
         <a href="/endorsements"  class="mr-5 hover:text-white">Endorsements</a>
         <a href="/certificates" class="mr-5 hover:text-white">Certification</a>

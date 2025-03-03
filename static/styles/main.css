@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.page-gradient {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(30, 41, 59, 0.7) 0%,
+        rgba(15, 23, 42, 0.95) 100%
+    );
+    z-index: -1;
+}
+
+.card-shadow {
+    box-shadow: 
+        0 0 40px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-fade {
+    background: linear-gradient(
+        145deg,
+        rgba(30, 41, 59, 0.8) 0%,
+        rgba(15, 23, 42, 0.95) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fade-edges {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 15%,
+        black 85%,
+        transparent
+    );
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.back-button {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.75rem 2rem;
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    z-index: 100;
+}
+
+.back-button:hover {
+    background: rgba(59, 130, 246, 0.9);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.title-wrap {
+    white-space: normal;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.2;
+}
+
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 2s steps(40) forwards;
+}
+
+.endorsement-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 2s, transform 0.5s ease 2s;
+}
+
+.visible .endorsement-content {
+    opacity: 1;
+    transform: translateY(0);
+}

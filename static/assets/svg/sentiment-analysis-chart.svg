@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f0f0f0"/>
+  <g transform="translate(50,30)">
+    <text x="200" y="0" font-family="Arial" font-size="16" text-anchor="middle">Sentiment Analysis Over Time</text>
+    <path d="M0,220 L0,150 L133,180 L266,200 L400,220 L400,220 Z" fill="#4CAF50" opacity="0.7"/>
+    <path d="M0,150 L133,180 L266,200 L400,220 L400,50 L266,100 L133,120 L0,150 Z" fill="#FFC107" opacity="0.7"/>
+    <path d="M0,150 L133,120 L266,100 L400,50 L400,20 L266,40 L133,60 L0,20 Z" fill="#FF5722" opacity="0.7"/>
+    <line x1="0" y1="220" x2="400" y2="220" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="220" x2="0" y2="20" stroke="black" stroke-width="2"/>
+    <text x="200" y="250" font-family="Arial" font-size="12" text-anchor="middle">Time (March 2021 - November 2022)</text>
+    <text x="-30" y="120" font-family="Arial" font-size="12" text-anchor="middle" transform="rotate(-90 -30,120)">Sentiment Intensity</text>
+    <rect x="410" y="80" width="20" height="20" fill="#4CAF50" opacity="0.7"/>
+    <rect x="410" y="110" width="20" height="20" fill="#FFC107" opacity="0.7"/>
+    <rect x="410" y="140" width="20" height="20" fill="#FF5722" opacity="0.7"/>
+    <text x="435" y="95" font-family="Arial" font-size="10">Positive</text>
+    <text x="435" y="125" font-family="Arial" font-size="10">Neutral</text>
+    <text x="435" y="155" font-family="Arial" font-size="10">Negative</text>
+  </g>
+</svg>

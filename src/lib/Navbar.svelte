@@ -1,6 +1,6 @@
 <header class="text-gray-400 bg-gradient-to-r from-black m-2 rounded-xl via-blue-950 to-black border-b border-gray-700">
     <div class=" w-full flex flex-wrap px-5 py-4 flex-col md:flex-row items-center">
-      <a href="#" class="flex title-font items-center text-white mb-4 md:mb-0 ">
+      <a href="/" class="flex title-font items-center text-white mb-4 md:mb-0 ">
         <img src="/logosm.png" class="w-[50px]" alt="">
         <div class="flex flex-col">
             <span class="ml-3 text-xl">Justice Minds</span>
@@ -8,7 +8,7 @@
         </div>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a href="#" class="mr-5 hover:text-white">Ben Mak Profile</a>
+        <a href="/certificates" class="mr-5 hover:text-white">Ben Mak Profile</a>
         <a href="#" class="mr-5 hover:text-white">About</a>
         <a href="#" class="mr-5 hover:text-white">Certifications</a>
         <a href="#" class="mr-5 hover:text-white">Statistics</a>

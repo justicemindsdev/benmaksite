@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f0f0f0"/>
+  <g transform="translate(50,30)">
+    <text x="200" y="0" font-family="Arial" font-size="16" text-anchor="middle">Consent and Advocacy Metrics</text>
+    <rect x="0" y="20" width="80" height="200" fill="#4CAF50"/>
+    <rect x="100" y="140" width="80" height="80" fill="#FFC107"/>
+    <rect x="200" y="20" width="80" height="200" fill="#2196F3"/>
+    <rect x="300" y="200" width="80" height="20" fill="#FF5722"/>
+    <text x="40" y="240" font-family="Arial" font-size="12" text-anchor="middle">Explicit Consent (5)</text>
+    <text x="140" y="240" font-family="Arial" font-size="12" text-anchor="middle">Implied Consent (2)</text>
+    <text x="240" y="240" font-family="Arial" font-size="12" text-anchor="middle">Advocacy Attempts (9)</text>
+    <text x="340" y="240" font-family="Arial" font-size="12" text-anchor="middle">Successful Advocacy (1)</text>
+  </g>
+</svg>

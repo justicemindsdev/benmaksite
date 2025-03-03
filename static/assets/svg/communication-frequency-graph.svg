@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f0f0f0"/>
+  <g transform="translate(50,30)">
+    <text x="200" y="0" font-family="Arial" font-size="16" text-anchor="middle">Communication Frequency Over Time</text>
+    <line x1="0" y1="220" x2="400" y2="220" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="220" x2="0" y2="20" stroke="black" stroke-width="2"/>
+    <polyline points="0,200 100,180 200,100 300,150 400,190" fill="none" stroke="#FF5722" stroke-width="3"/>
+    <text x="200" y="250" font-family="Arial" font-size="12" text-anchor="middle">Time (March 2021 - November 2022)</text>
+    <text x="-30" y="120" font-family="Arial" font-size="12" text-anchor="middle" transform="rotate(-90 -30,120)">Number of Communications</text>
+  </g>
+</svg>

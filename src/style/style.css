@@ -1,4 +1,238 @@
 body {
     font-family: "Pridi";
     font-weight: 300;
+    color: white;
 }
+        
+
+        .page-gradient {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(
+                circle at center,
+                rgba(15, 23, 42, 0.3) 0%,
+                rgba(0, 0, 0, 0.95) 100%
+            );
+            z-index: -1;
+        }
+
+        .card-shadow {
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-fade {
+            background: linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.7) 0%,
+                rgba(0, 0, 0, 0.95) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fade-edges {
+            mask-image: linear-gradient(
+                to right,
+                transparent,
+                black 15%,
+                black 85%,
+                transparent
+            );
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.75rem 2rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background: rgba(59, 130, 246, 0.9);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .title-wrap {
+            white-space: normal;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.2;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typewriter 2s steps(40) forwards;
+        }
+
+        .endorsement-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease 2s, transform 0.5s ease 2s;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .visible .endorsement-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-logo {
+            position: absolute;
+            width: 800px;
+            height: 1000px;
+            opacity: 0.15;
+            filter: brightness(1.8) contrast(0.9);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+        }
+
+        .modal-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-left: 4px solid #3B82F6;
+        }
+        .enhanced-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            padding: 1rem 0;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.85), rgba(15, 23, 42, 0.95));
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-decoration: none;
+            color: white;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.8), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.9));
+            min-width: 250px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-top: 0.75rem;
+            overflow: hidden;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .dropdown-content.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .dropdown-link {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .dropdown-link:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-link:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: white;
+            padding-left: 25px;
+        }

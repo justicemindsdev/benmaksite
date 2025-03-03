@@ -10,12 +10,18 @@
       <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 md:mb-0 mb-10">
         <img class="object-cover object-center h-[500px] w-full rounded-xl" alt="hero" src="/Profiles/Ben.png">
       </div>
-      <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-        <h1 class="title-font sm:text-6xl text-2xl mb-4 font-thin text-white">Ben Mak
+      <div class="lg:flex-grow border border-gray-800 bg-gray-900 p-4 m-4 rounded-xl md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+        <h1 class="title-font sm:text-6xl text-2xl mb-4 font-thin text-white"><span class="text-yellow-600">Ben Mak</span>
           <br class="hidden lg:inline-block text-sm"><span class="text-md">Data Driven Advocacy</span>
         </h1>
-        <p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.</p>
-        
+        <p class="mb-8 leading-relaxed"></p>
+        Transforming Legal Advocacy Through Forensic Precision
+In a system where traditional approaches often fail the vulnerable, Justice Minds stands at the intersection of legal expertise and scientific methodology. Our founder's portfolio—validated by the Ministry of Justice and forensic linguistic analysis—represents a new paradigm in advocacy.
+3,668 professional interactions. 900+ documented cases. One mission: justice without compromise.
+We integrate advanced documentation strategies, trauma-informed practice, and data-driven analysis to create unprecedented results for clients navigating complex legal and social systems. Our approach has been recognized at the highest levels, from Court of Appeal successes to policy reform implementations.
+When conventional systems fail, we prevail.
+Through rigorous evidence preservation, strategic coordination across professional boundaries, and unwavering commitment to rights-based advocacy, we transform impossibilities into outcomes.
+Justice Minds: Where expertise meets empathy, and evidence creates change
       </div>
     </div>
   </section>

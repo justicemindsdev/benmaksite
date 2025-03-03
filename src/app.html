@@ -355,4 +355,210 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<LogoCarousel />);
     </script>
+	<script>
+        const certificates = [
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.46.26.png",
+                title: "Professional Certification in Child Protection"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.46.31.png",
+                title: "Advanced Safeguarding Certification"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.46.44.png",
+                title: "Legal Advocacy Qualification"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.47.31.png",
+                title: "Child Welfare Specialist Certification"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.47.32.png",
+                title: "NSPCC Endorsed Child Protection"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.47.59.png",
+                title: "Mental Health Advocacy Certification"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2008.48.08.png",
+                title: "SEND Support Services Qualification"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Yoink%202025-02-12%2009.28.15.png",
+                title: "Government Recognition Award"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2009.27.35.png",
+                title: "Children's Rights Advocacy Certificate"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2009.29.50.png",
+                title: "Independent Advocacy Training"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2009.30.10.png",
+                title: "Professional Development Excellence"
+            },
+            {
+                src: "/assets/CERTIFICATES%20ENDORESEMENTS/Finder%202025-02-12%2009.32.13.png",
+                title: "Safeguarding Leadership Award"
+            },
+            {
+                src: "/CERTIFICATES%20ENDORESEMENTS/asdas.jpeg",
+                title: "Parliamentory Chief Executive Tony Reeves Acknowledgement"
+            }
+        ];
+
+        const sliderContent = document.querySelector('.slider-content');
+        const modal = document.querySelector('.modal');
+        const modalImage = document.querySelector('.modal-image');
+        const modalTitle = document.querySelector('.modal-title');
+        const closeButton = document.querySelector('.close-button');
+        
+        certificates.forEach((cert, index) => {
+            const angle = (360 / certificates.length) * index;
+            const item = document.createElement('div');
+            item.className = 'item';
+            item.style.transform = `rotateY(${angle}deg) translateZ(600px)`;
+            
+            item.innerHTML = `
+                <div class="item-content">
+                    <div class="item-front">
+                        <img src="${cert.src}" alt="${cert.title}" class="certificate-image">
+                        <div class="official-seal"></div>
+                    </div>
+                    <div class="item-back">
+                        <img src="../FInal%20website/assets/CERTIFICATES%20ENDORESEMENTS/logo.png" alt="Justice Minds Logo" class="back-logo">
+                    </div>
+                </div>
+            `;
+            
+            item.querySelector('.item-front').addEventListener('click', () => {
+                modalImage.src = cert.src;
+                modalTitle.textContent = cert.title;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                sliderContent.style.animationPlayState = 'paused';
+                
+                // Add smooth entrance animation
+                modalImage.style.opacity = '0';
+                modalTitle.style.opacity = '0';
+                modalImage.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    modalImage.style.opacity = '0.95';
+                    modalTitle.style.opacity = '1';
+                    modalImage.style.transform = 'scale(1)';
+                }, 50);
+            });
+            
+            sliderContent.appendChild(item);
+        });
+
+        const resumeCarousel = () => {
+            // Add smooth exit animation
+            modalImage.style.opacity = '0';
+            modalTitle.style.opacity = '0';
+            modalImage.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                sliderContent.style.animationPlayState = 'running';
+            }, 200);
+        };
+
+        closeButton.addEventListener('click', resumeCarousel);
+        document.querySelector('.back-button').addEventListener('click', resumeCarousel);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                resumeCarousel();
+            }
+        });
+
+        // Preload images
+        certificates.forEach(cert => {
+            const img = new Image();
+            img.src = cert.src;
+        });
+
+        const logoImg = new Image();
+        logoImg.src = '../FInal%20website/assets/CERTIFICATES%20ENDORESEMENTS/logo.png';
+        
+        // Enhanced dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.querySelector('.dropdown');
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let isDropdownOpen = false;
+            
+            // Toggle dropdown on click
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!isDropdownOpen) {
+                    dropdownContent.classList.add('active');
+                    isDropdownOpen = true;
+                } else {
+                    dropdownContent.classList.remove('active');
+                    isDropdownOpen = false;
+                }
+            });
+            
+            // Show dropdown on hover and keep it visible
+            dropdown.addEventListener('mouseenter', function() {
+                dropdownContent.classList.add('active');
+                isDropdownOpen = true;
+            });
+            
+            // Keep dropdown visible when hovering over it
+            dropdownContent.addEventListener('mouseenter', function() {
+                dropdownContent.classList.add('active');
+                isDropdownOpen = true;
+            });
+            
+            // Only hide dropdown when mouse leaves both the toggle and the content
+            dropdown.addEventListener('mouseleave', function(e) {
+                // Check if mouse is moving to the dropdown content
+                if (!e.relatedTarget || !dropdown.contains(e.relatedTarget)) {
+                    // Use a timeout to allow moving to the dropdown content
+                    setTimeout(function() {
+                        if (!dropdown.matches(':hover') && !dropdownContent.matches(':hover')) {
+                            dropdownContent.classList.remove('active');
+                            isDropdownOpen = false;
+                        }
+                    }, 100);
+                }
+            });
+            
+            dropdownContent.addEventListener('mouseleave', function() {
+                if (!dropdown.matches(':hover')) {
+                    dropdownContent.classList.remove('active');
+                    isDropdownOpen = false;
+                }
+            });
+            
+            // Prevent dropdown from closing when clicking inside it
+            dropdownContent.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdownContent.classList.remove('active');
+                    isDropdownOpen = false;
+                }
+            });
+            
+            // News search - open in new window
+            const searchLink = document.querySelector('a[href="#search"]');
+            
+            searchLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open('/Users/infiniteintelligence/Indian Genius/benmak/sarasearch.html', '_blank');
+            });
+        });
+    </script>
 </html>

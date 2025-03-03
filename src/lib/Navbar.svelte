@@ -8,9 +8,9 @@
         </div>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a href="/certificates" class="mr-5 hover:text-white">Ben Mak Profile</a>
+        <a href="/" class="mr-5 hover:text-white">Ben Mak Profile</a>
         <a href="#" class="mr-5 hover:text-white">About</a>
-        <a href="#" class="mr-5 hover:text-white">Certifications</a>
+        <a href="/certificates" class="mr-5 hover:text-white">Certifications</a>
         <a href="#" class="mr-5 hover:text-white">Statistics</a>
         <a href="#" class="mr-5 hover:text-white">News</a>
         <!-- <a href="#" class="mr-5 hover:text-white">Contact Us</a> -->

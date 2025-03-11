@@ -1,6 +1,8 @@
 .back-button {
     position: relative;
-    margin-top: 2rem; /* Adjust this value as needed */
+    display: block;
+    margin-top: 3rem; /* Increased from 2rem for more spacing */
+    clear: both;
     padding: 0.75rem 2rem;
     background-color: #1f2937;
     border: none;

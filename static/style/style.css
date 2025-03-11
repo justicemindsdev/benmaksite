@@ -46,10 +46,11 @@ body {
         }
 
         .back-button {
-            position: relative;
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: block;
-            margin-top: 3rem;
-            clear: both;
             padding: 0.75rem 2rem;
             background: rgba(15, 23, 42, 0.9);
             border: 1px solid rgba(148, 163, 184, 0.2);
@@ -64,7 +65,7 @@ body {
 
         .back-button:hover {
             background: rgba(59, 130, 246, 0.9);
-            transform: translateY(-2px);
+            transform: translateX(-50%) translateY(-2px);
         }
 
         .title-wrap {
@@ -467,6 +468,9 @@ body {
             max-height: 90vh;
             transform: rotateY(-5deg) rotateX(2deg);
             transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 5rem; /* Add padding at the bottom for the button */
         }
 
         .modal-frame {

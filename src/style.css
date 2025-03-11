@@ -1,8 +1,9 @@
 .back-button {
-    position: relative;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: block;
-    margin-top: 3rem; /* Increased from 2rem for more spacing */
-    clear: both;
     padding: 0.75rem 2rem;
     background-color: #1f2937;
     border: none;
@@ -16,4 +17,5 @@
 
 .back-button:hover {
     background-color: #4b5563;
+    transform: translateX(-50%) translateY(-2px);
 }

@@ -1,8 +1,6 @@
 .back-button {
-    position: fixed;
-    bottom: -6rem;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    margin-top: 2rem; /* Adjust this value as needed */
     padding: 0.75rem 2rem;
     background-color: #1f2937;
     border: none;

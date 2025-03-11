@@ -4,26 +4,37 @@
     left: 50%;
     transform: translateX(-50%);
     display: block;
-    padding: 0.5rem 1.25rem;  /* Further reduced horizontal padding */
+    padding: 0.4rem 1rem;  /* Reduced padding */
     background-color: #1f2937;
     border: none;
     border-radius: 0.375rem;
     color: #fff;
-    font-size: 0.9rem;
+    font-size: 0.85rem;  /* Smaller font */
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 100;
-    max-width: 180px;  /* Slightly reduced max-width */
-    text-align: center;  /* Ensure text is centered */
-    white-space: nowrap;  /* Prevent text wrapping */
+    max-width: 160px;  /* Reduced max-width */
+    text-align: center;
+    white-space: nowrap;
 }
 
-/* Add responsive adjustments for mobile */
+/* Responsive adjustments for mobile */
 @media (max-width: 640px) {
     .back-button {
-        padding: 0.4rem 1rem;  /* Even smaller on mobile */
-        font-size: 0.85rem;
-        max-width: 160px;
+        padding: 0.3rem 0.75rem;  /* Much smaller on mobile */
+        font-size: 0.75rem;
+        max-width: 130px;
+        bottom: 1.5rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+    .back-button {
+        padding: 0.25rem 0.5rem;  /* Extremely compact */
+        font-size: 0.7rem;
+        max-width: 110px;
+        bottom: 1rem;
     }
 }
 

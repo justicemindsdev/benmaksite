@@ -129,7 +129,7 @@
             <h3 class="modal-title"></h3>
             <img class="modal-image" src="" alt="Certificate">
             <div class="modal-verified"></div>
-            <button class="back-button" style="position: absolute; bottom: -3rem; left: 50%; transform: translateX(-50%); padding: 0.75rem 2rem; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px; color: white; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(12px); z-index: 100;">Return to Certificates</button>
+            <button class="back-button">Return to Certificates</button>
         </div>
         <button class="close-button">Close</button>
     </div>

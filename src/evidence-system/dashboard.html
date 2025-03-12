@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUSTICE MINDS - Evidence Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Modularized CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="glowing-orb" style="left: 20%; top: 30%;">
+    <div class="orb"></div>
+    <div class="orb-inner"></div>
+    <div class="orb-highlight"></div>
+  </div>
+  
+  <div class="glowing-orb" style="right: 25%; top: 70%;">
+    <div class="orb" style="opacity: 0.6; width: 400px; height: 400px;"></div>
+    <div class="orb-inner" style="width: 250px; height: 250px;"></div>
+    <div class="orb-highlight" style="width: 80px; height: 80px;"></div>
+  </div>
+  
+  <div class="bg-grid"></div>
+
+  <!-- Gleam spots -->
+  <div class="gleam-spot" style="top: 15%; left: 25%;"></div>
+  <div class="gleam-spot" style="top: 40%; left: 85%;"></div>
+  <div class="gleam-spot" style="top: 70%; left: 35%;"></div>
+  <div class="gleam-spot" style="top: 85%; left: 65%;"></div>
+  <div class="gleam-spot" style="top: 20%; left: 70%;"></div>
+
+  <header class="header-gradient p-8 mt-10 shine-effect">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <img src="images/logofinal.png" alt="Justice Minds Logo" class="h-16 mr-4">
+          <div>
+            <h1 class="justice-title text-2xl md:text-3xl">JUSTICE MINDS</h1>
+            <p class="tagline text-sm">Evidence Collection System</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center">
+          <div class="timer-badge shine-effect mr-6">
+            <div class="text-center uppercase font-semibold text-xs tracking-wider text-white mb-1">TIMESTAMP</div>
+            <div class="flex justify-center items-center">
+              <div class="timer-pulse"></div>
+              <div id="live-clock" class="font-mono text-sm"></div>
+            </div>
+          </div>
+          
+          <div class="flex items-center">
+            <span class="mr-2">Logged in as:</span>
+            <span id="user-email" class="font-semibold"></span>
+            <button id="sign-out-btn" class="official-button px-3 py-1 text-xs ml-4 rounded-full">SIGN OUT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto p-4 relative z-10">
+    <div class="mb-8 p-6 container-box layer-effect shine-effect reflective-edge">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold tracking-wider">EVIDENCE DASHBOARD</h2>
+        <div id="document-id" class="text-sm font-mono">DOCUMENT ID: JM-<span id="unique-id"></span></div>
+      </div>
+      
+      <div class="divider mb-6"></div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="container-box p-6 relative layer-effect shine-effect reflective-edge">
+          <h3 class="text-xl font-semibold tracking-wider mb-4">MY EVIDENCE</h3>
+          <p class="mb-4">Manage your evidence containers and submissions.</p>
+          <button id="view-evidence-btn" class="official-button px-5 py-2 rounded-full shine-effect">VIEW EVIDENCE</button>
+        </div>
+        
+        <div class="container-box p-6 relative layer-effect shine-effect reflective-edge">
+          <h3 class="text-xl font-semibold tracking-wider mb-4">NEW SUBMISSION</h3>
+          <p class="mb-4">Create a new evidence submission with secure storage.</p>
+          <button id="new-submission-btn" class="official-button px-5 py-2 rounded-full shine-effect">CREATE SUBMISSION</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Submission Log -->
+    <div id="submission-log" class="mb-8 p-6 container-box layer-effect shine-effect reflective-edge">
+      <h3 class="text-xl font-semibold tracking-wider mb-4">RECENT SUBMISSIONS</h3>
+      <div id="log-entries" class="space-y-4">
+        <div class="text-center text-gray-400 py-8">
+          <p>Loading submissions...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer-gradient py-8 text-center mt-10 relative z-10 shine-effect">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-3xl mb-2 justice-title">JUSTICE MINDS</div>
+      <p class="tagline mb-4">Evidence Collection System</p>
+      
+      <div class="divider"></div>
+      
+      <div class="text-xs text-gray-400 mt-4">
+        <p>This document is protected under UK law. Unauthorised alteration constitutes an offence under the Fraud Act 2006.</p>
+        <p class="mt-1">Crown Copyright © 2023 HM Courts & Tribunals Service</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modularized JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/supabase.js"></script>
+  
+  <script>
+    // Initialize the application when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize animations
+      initializeAnimations();
+      
+      // Initialize Supabase
+      initializeSupabase();
+      
+      // Generate and set unique document ID
+      const uniqueIdElement = document.getElementById('unique-id');
+      uniqueIdElement.textContent = generateUniqueId();
+      
+      // Set up the live clock
+      const clockElement = document.getElementById('live-clock');
+      
+      function updateClock() {
+        const now = new Date();
+        clockElement.textContent = now.toLocaleString('en-GB', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          second: '2-digit',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour12: false
+        });
+      }
+      
+      // Update clock immediately and then every second
+      updateClock();
+      setInterval(updateClock, 1000);
+      
+      // Check if user is authenticated
+      checkSession().then(function(session) {
+        if (!session) {
+          // Redirect to login page if not authenticated
+          window.location.href = 'index.html';
+        } else {
+          // Load user's submissions
+          loadUserSubmissions();
+        }
+      });
+      
+      // Sign out button
+      const signOutBtn = document.getElementById('sign-out-btn');
+      
+      if (signOutBtn) {
+        signOutBtn.addEventListener('click', async function() {
+          const result = await signOut();
+          
+          if (result.success) {
+            // Redirect to login page
+            window.location.href = 'index.html';
+          }
+        });
+      }
+      
+      // View evidence button
+      const viewEvidenceBtn = document.getElementById('view-evidence-btn');
+      
+      if (viewEvidenceBtn) {
+        viewEvidenceBtn.addEventListener('click', function() {
+          // Redirect to evidence page
+          window.location.href = 'evidence.html';
+        });
+      }
+      
+      // New submission button
+      const newSubmissionBtn = document.getElementById('new-submission-btn');
+      
+      if (newSubmissionBtn) {
+        newSubmissionBtn.addEventListener('click', function() {
+          // Redirect to submission page
+          window.location.href = 'submission.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

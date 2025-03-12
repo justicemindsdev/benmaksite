@@ -1,0 +1,212 @@
+/* Base styles */
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: radial-gradient(ellipse at center, #050C23 0%, #010611 70%, #000000 100%);
+  color: #fff;
+  position: relative;
+  overflow-x: hidden;
+  background-attachment: fixed;
+  margin: 0;
+  min-height: 100vh;
+}
+
+:root {
+  --primary-bg: linear-gradient(145deg, rgba(7, 16, 38, 0.5) 0%, rgba(0, 0, 0, 0.8) 100%);
+  --header-bg: linear-gradient(to bottom, rgba(7, 16, 38, 0.8) 0%, rgba(1, 6, 17, 0.8) 100%);
+  --footer-bg: linear-gradient(to top, rgba(7, 16, 38, 0.8) 0%, rgba(1, 6, 17, 0.8) 100%);
+  --toggle-bg: linear-gradient(to bottom, rgba(10, 22, 50, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  --toggle-hover-bg: linear-gradient(to bottom, rgba(19, 38, 80, 0.8) 0%, rgba(4, 8, 20, 0.9) 100%);
+  --button-bg: linear-gradient(145deg, rgba(10, 22, 50, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+  --button-hover-bg: linear-gradient(145deg, rgba(19, 38, 80, 0.9) 0%, rgba(4, 8, 20, 0.95) 100%);
+  --timer-bg: linear-gradient(145deg, rgba(7, 16, 38, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  --modal-bg: linear-gradient(145deg, rgba(10, 22, 50, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+  --share-bg: linear-gradient(145deg, rgba(10, 22, 50, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%);
+  --form-bg: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(7, 16, 38, 0.6) 100%);
+  --checkbox-bg: linear-gradient(145deg, rgba(7, 16, 38, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  --checkbox-checked-bg: linear-gradient(145deg, rgba(25, 49, 110, 0.8) 0%, rgba(7, 16, 38, 0.9) 100%);
+  
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-color-hover: rgba(255, 255, 255, 0.4);
+  --text-color: #fff;
+  --text-color-muted: rgba(255, 255, 255, 0.8);
+  --text-color-dimmed: rgba(255, 255, 255, 0.4);
+  --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.9);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-input: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 30px;
+}
+
+.justice-title {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #d3d8ef;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-gradient {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+}
+
+.footer-gradient {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border-color);
+  position: relative;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.container-box {
+  border: 1px solid var(--border-color);
+  background: var(--primary-bg);
+  box-shadow: var(--shadow-md), var(--shadow-inner);
+  position: relative;
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.container-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-inner);
+}
+
+.container-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.toggle-header {
+  cursor: pointer;
+  user-select: none;
+  background: var(--toggle-bg);
+  transition: all 0.2s;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-header:hover {
+  background: var(--toggle-hover-bg);
+}
+
+.toggle-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.toggle-content.open {
+  max-height: 600px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  margin: 20px 0;
+  opacity: 0.8;
+}
+
+/* Form elements */
+textarea, input[type="text"] {
+  color: var(--text-color);
+  background: var(--form-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s;
+  box-shadow: var(--shadow-input);
+}
+
+textarea:focus, input[type="text"]:focus {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), var(--shadow-input);
+  outline: none;
+  border-color: var(--border-color-hover);
+}
+
+/* Customized scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(25, 49, 110, 0.8), rgba(7, 16, 38, 0.9));
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(35, 65, 140, 0.8), rgba(15, 30, 60, 0.9));
+}
+
+.tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--text-color-muted);
+  margin-top: 5px;
+}
+
+.uk-notice {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(145deg, rgba(7, 16, 38, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%);
+  font-size: 0.8rem;
+  color: var(--text-color-muted);
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Logo styling */
+.logo-emblem {
+  width: 160px;
+  height: 160px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.logo-emblem svg {
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+}
+
+.crown-icon {
+  font-size: 1.2rem;
+  color: #e2c375;
+  margin-bottom: 5px;
+  filter: drop-shadow(0 0 8px rgba(226, 195, 117, 0.6));
+}

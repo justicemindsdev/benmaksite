@@ -1,19 +1,19 @@
 .back-button {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
     display: block;
-    padding: 0.4rem 1rem;  /* Reduced padding */
+    padding: 0.2rem 0.5rem;  /* 50% smaller padding */
     background-color: #1f2937;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 0.25rem;  /* Smaller border radius */
     color: #fff;
-    font-size: 0.85rem;  /* Smaller font */
+    font-size: 0.7rem;  /* 50% smaller font */
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 100;
-    max-width: 160px;  /* Reduced max-width */
+    max-width: 80px;  /* 50% smaller width */
     text-align: center;
     white-space: nowrap;
 }
@@ -21,20 +21,20 @@
 /* Responsive adjustments for mobile */
 @media (max-width: 640px) {
     .back-button {
-        padding: 0.3rem 0.75rem;  /* Much smaller on mobile */
-        font-size: 0.75rem;
-        max-width: 130px;
-        bottom: 1.5rem;
+        padding: 0.15rem 0.4rem;
+        font-size: 0.6rem;
+        max-width: 65px;
+        bottom: 1rem;
     }
 }
 
 /* Extra small devices */
 @media (max-width: 375px) {
     .back-button {
-        padding: 0.25rem 0.5rem;  /* Extremely compact */
-        font-size: 0.7rem;
-        max-width: 110px;
-        bottom: 1rem;
+        padding: 0.1rem 0.25rem;
+        font-size: 0.55rem;
+        max-width: 55px;
+        bottom: 0.75rem;
     }
 }
 

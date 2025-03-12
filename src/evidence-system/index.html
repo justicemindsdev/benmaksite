@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUSTICE MINDS - Official Legal Evidence Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Modularized CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/modal.css">
+  
+  <style>
+    .auth-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(10, 22, 50, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+    }
+    
+    .logo-container {
+      margin-bottom: 2rem;
+    }
+    
+    .logo-image {
+      width: 160px;
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="glowing-orb" style="left: 20%; top: 30%;">
+    <div class="orb"></div>
+    <div class="orb-inner"></div>
+    <div class="orb-highlight"></div>
+  </div>
+  
+  <div class="glowing-orb" style="right: 25%; top: 70%;">
+    <div class="orb" style="opacity: 0.6; width: 400px; height: 400px;"></div>
+    <div class="orb-inner" style="width: 250px; height: 250px;"></div>
+    <div class="orb-highlight" style="width: 80px; height: 80px;"></div>
+  </div>
+  
+  <div class="bg-grid"></div>
+
+  <!-- Gleam spots -->
+  <div class="gleam-spot" style="top: 15%; left: 25%;"></div>
+  <div class="gleam-spot" style="top: 40%; left: 85%;"></div>
+  <div class="gleam-spot" style="top: 70%; left: 35%;"></div>
+  <div class="gleam-spot" style="top: 85%; left: 65%;"></div>
+  <div class="gleam-spot" style="top: 20%; left: 70%;"></div>
+
+  <div class="min-h-screen flex flex-col justify-center items-center p-4">
+    <div class="text-center mb-8">
+      <div class="logo-container">
+        <!-- Logo emblem -->
+        <div class="logo-image">
+          <img src="images/logofinal.png" alt="Justice Minds Logo">
+        </div>
+        
+        <div class="divider w-1/2 mx-auto my-4"></div>
+        
+        <h1 class="justice-title text-3xl md:text-5xl">JUSTICE MINDS</h1>
+        <p class="tagline mt-2">Evidence Collection System</p>
+      </div>
+    </div>
+    
+    <div class="auth-container layer-effect shine-effect reflective-edge">
+      <div id="auth-tabs" class="flex mb-6">
+        <div id="login-tab" class="flex-1 py-2 text-center cursor-pointer border-b-2 border-blue-500">Login</div>
+        <div id="signup-tab" class="flex-1 py-2 text-center cursor-pointer border-b-2 border-transparent">Sign Up</div>
+      </div>
+      
+      <div id="login-form">
+        <div class="mb-4">
+          <label class="block mb-2">Email</label>
+          <input type="email" id="login-email" class="w-full p-3 rounded-lg" placeholder="Enter your email">
+        </div>
+        <div class="mb-6">
+          <label class="block mb-2">Password</label>
+          <input type="password" id="login-password" class="w-full p-3 rounded-lg" placeholder="Enter your password">
+        </div>
+        <button id="login-btn" class="official-button w-full py-3 rounded-lg">LOGIN</button>
+        <p id="login-error" class="mt-4 text-red-500 text-center hidden"></p>
+        
+        <div class="divider my-6"></div>
+        
+        <div class="text-center mb-4">
+          <p class="text-sm font-semibold mb-4">Or sign in with</p>
+          <div class="flex justify-center space-x-4">
+            <button id="google-signin" class="official-button px-4 py-2 rounded-full shine-effect flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff" class="mr-2">
+                <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+              </svg>
+              Gmail
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="signup-form" class="hidden">
+        <div class="mb-4">
+          <label class="block mb-2">Username</label>
+          <input type="text" id="signup-username" class="w-full p-3 rounded-lg" placeholder="Choose a username">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Email</label>
+          <input type="email" id="signup-email" class="w-full p-3 rounded-lg" placeholder="Enter your email">
+        </div>
+        <div class="mb-6">
+          <label class="block mb-2">Password</label>
+          <input type="password" id="signup-password" class="w-full p-3 rounded-lg" placeholder="Choose a password">
+        </div>
+        <button id="signup-btn" class="official-button w-full py-3 rounded-lg">SIGN UP</button>
+        <p id="signup-error" class="mt-4 text-red-500 text-center hidden"></p>
+        
+        <div class="divider my-6"></div>
+        
+        <div class="text-center mb-4">
+          <p class="text-sm font-semibold mb-4">Or sign up with</p>
+          <div class="flex justify-center space-x-4">
+            <button id="google-signup" class="official-button px-4 py-2 rounded-full shine-effect flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff" class="mr-2">
+                <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+              </svg>
+              Gmail
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-xs text-gray-400 mt-6 text-center">
+        <p>By signing in, you agree to the Terms of Service and Privacy Policy.</p>
+      </div>
+    </div>
+    
+    <div class="text-xs text-gray-400 mt-8 text-center">
+      <p>This system is protected under UK law. Unauthorised access constitutes an offence under the Computer Misuse Act 1990.</p>
+      <p class="mt-1">Crown Copyright © 2023 HM Courts & Tribunals Service</p>
+    </div>
+  </div>
+
+  <!-- Modularized JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/supabase.js"></script>
+  
+  <script>
+    // Initialize animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize animations
+      initializeAnimations();
+      
+      // Initialize Supabase
+      initializeSupabase();
+      
+      // Tab switching
+      const loginTab = document.getElementById('login-tab');
+      const signupTab = document.getElementById('signup-tab');
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      
+      if (loginTab && signupTab) {
+        loginTab.addEventListener('click', function() {
+          loginTab.classList.add('border-blue-500');
+          signupTab.classList.remove('border-blue-500');
+          loginTab.classList.remove('border-transparent');
+          signupTab.classList.add('border-transparent');
+          loginForm.classList.remove('hidden');
+          signupForm.classList.add('hidden');
+        });
+        
+        signupTab.addEventListener('click', function() {
+          signupTab.classList.add('border-blue-500');
+          loginTab.classList.remove('border-blue-500');
+          signupTab.classList.remove('border-transparent');
+          loginTab.classList.add('border-transparent');
+          signupForm.classList.remove('hidden');
+          loginForm.classList.add('hidden');
+        });
+      }
+      
+      // Login form
+      const loginBtn = document.getElementById('login-btn');
+      const loginEmail = document.getElementById('login-email');
+      const loginPassword = document.getElementById('login-password');
+      const loginError = document.getElementById('login-error');
+      
+      if (loginBtn) {
+        loginBtn.addEventListener('click', async function() {
+          if (!loginEmail.value || !loginPassword.value) {
+            loginError.textContent = 'Please enter both email and password';
+            loginError.classList.remove('hidden');
+            return;
+          }
+          
+          loginBtn.disabled = true;
+          loginBtn.textContent = 'LOGGING IN...';
+          
+          const result = await signIn(loginEmail.value, loginPassword.value);
+          
+          if (result.success) {
+            // Redirect to the evidence dashboard
+            window.location.href = 'dashboard.html';
+          } else {
+            loginError.textContent = result.message || 'Login failed';
+            loginError.classList.remove('hidden');
+          }
+          
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'LOGIN';
+        });
+      }
+      
+      // Signup form
+      const signupBtn = document.getElementById('signup-btn');
+      const signupUsername = document.getElementById('signup-username');
+      const signupEmail = document.getElementById('signup-email');
+      const signupPassword = document.getElementById('signup-password');
+      const signupError = document.getElementById('signup-error');
+      
+      if (signupBtn) {
+        signupBtn.addEventListener('click', async function() {
+          if (!signupUsername.value || !signupEmail.value || !signupPassword.value) {
+            signupError.textContent = 'Please fill in all fields';
+            signupError.classList.remove('hidden');
+            return;
+          }
+          
+          signupBtn.disabled = true;
+          signupBtn.textContent = 'SIGNING UP...';
+          
+          const result = await signUp(signupEmail.value, signupPassword.value, signupUsername.value);
+          
+          if (result.success) {
+            // Redirect to the evidence dashboard
+            window.location.href = 'dashboard.html';
+          } else {
+            signupError.textContent = result.message || 'Signup failed';
+            signupError.classList.remove('hidden');
+          }
+          
+          signupBtn.disabled = false;
+          signupBtn.textContent = 'SIGN UP';
+        });
+      }
+      
+      // Google sign-in
+      const googleSigninBtn = document.getElementById('google-signin');
+      if (googleSigninBtn) {
+        googleSigninBtn.addEventListener('click', async function() {
+          const result = await signInWithOAuth('google');
+          if (!result.success) {
+            loginError.textContent = result.message || 'Google sign-in failed';
+            loginError.classList.remove('hidden');
+          }
+        });
+      }
+      
+      // Google sign-up
+      const googleSignupBtn = document.getElementById('google-signup');
+      if (googleSignupBtn) {
+        googleSignupBtn.addEventListener('click', async function() {
+          const result = await signInWithOAuth('google');
+          if (!result.success) {
+            signupError.textContent = result.message || 'Google sign-up failed';
+            signupError.classList.remove('hidden');
+          }
+        });
+      }
+      
+      // Check if user is already logged in
+      checkSession().then(function(session) {
+        if (session) {
+          // Redirect to the evidence dashboard
+          window.location.href = 'dashboard.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

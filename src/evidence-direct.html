@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUSTICE MINDS - Official Legal Evidence Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: radial-gradient(ellipse at center, #050C23 0%, #010611 70%, #000000 100%);
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+      background-attachment: fixed;
+      margin: 0;
+      min-height: 100vh;
+    }
+    
+    .justice-title {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #d3d8ef;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .header-gradient {
+      background: linear-gradient(to bottom, rgba(7, 16, 38, 0.8) 0%, rgba(1, 6, 17, 0.8) 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    
+    .footer-gradient {
+      background: linear-gradient(to top, rgba(7, 16, 38, 0.8) 0%, rgba(1, 6, 17, 0.8) 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    
+    .container-box {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(7, 16, 38, 0.5) 0%, rgba(0, 0, 0, 0.8) 100%);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .container-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    
+    .container-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+    
+    .toggle-header {
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(to bottom, rgba(10, 22, 50, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .toggle-header:hover {
+      background: linear-gradient(to bottom, rgba(19, 38, 80, 0.8) 0%, rgba(4, 8, 20, 0.9) 100%);
+    }
+    
+    .toggle-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    .toggle-content.open {
+      max-height: 600px;
+    }
+    
+    .seal-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, rgba(6, 15, 40, 0.9), rgba(11, 30, 81, 0.9));
+      color: white;
+      font-weight: 500;
+      font-family: 'Cinzel', serif;
+      padding: 5px 15px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      animation: glow 2s infinite alternate;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    @keyframes glow {
+      from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+      to { box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
+    }
+    
+    .official-button {
+      background: linear-gradient(145deg, rgba(10, 22, 50, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-weight: 500;
+      font-family: 'Cinzel', serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .official-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: skewX(-25deg);
+      transition: 0.5s;
+    }
+    
+    .official-button:hover::before {
+      left: 150%;
+      transition: 0.5s;
+    }
+    
+    .official-button:hover {
+      background: linear-gradient(145deg, rgba(19, 38, 80, 0.9) 0%, rgba(4, 8, 20, 0.95) 100%);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .timer-badge {
+      background: linear-gradient(145deg, rgba(7, 16, 38, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 15px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .timer-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+      opacity: 0.9;
+    }
+    
+    .timer-badge::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      transform: skewX(-25deg);
+      animation: shine 6s infinite;
+    }
+    
+    @keyframes shine {
+      0% { left: -150%; }
+      30% { left: 150%; }
+      100% { left: 150%; }
+    }
+    
+    .timer-pulse {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.9);
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+      70% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+      100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: linear-gradient(145deg, rgba(10, 22, 50, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow: auto;
+      position: relative;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+      margin: 20px 0;
+      opacity: 0.8;
+    }
+    
+    .share-container {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 30px;
+      background: linear-gradient(145deg, rgba(10, 22, 50, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 10;
+    }
+    
+    /* Custom checkbox styling */
+    .custom-checkbox {
+      display: inline-block;
+      position: relative;
+      padding-left: 30px;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .custom-checkbox input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background: linear-gradient(145deg, rgba(7, 16, 38, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .custom-checkbox:hover input ~ .checkmark {
+      background: linear-gradient(145deg, rgba(15, 30, 60, 0.8) 0%, rgba(4, 8, 20, 0.9) 100%);
+    }
+    
+    .custom-checkbox input:checked ~ .checkmark {
+      background: linear-gradient(145deg, rgba(25, 49, 110, 0.8) 0%, rgba(7, 16, 38, 0.9) 100%);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    .custom-checkbox input:checked ~ .checkmark:after {
+      display: block;
+    }
+    
+    .custom-checkbox .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    
+    /* Logo styling */
+    .logo-emblem {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    .logo-emblem svg {
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+    
+    .crown-icon {
+      font-size: 1.2rem;
+      color: #e2c375;
+      margin-bottom: 5px;
+      filter: drop-shadow(0 0 8px rgba(226, 195, 117, 0.6));
+    }
+    
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 5px;
+    }
+    
+    .uk-notice {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(145deg, rgba(7, 16, 38, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%);
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.05em;
+      margin-top: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Glowing orb effect */
+    .glowing-orb {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .orb {
+      width: 500px;
+      height: 500px;
+      background: rgba(7, 20, 50, 0.25);
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: pulse-slow 8s infinite alternate;
+    }
+    
+    .orb-inner {
+      position: absolute;
+      inset: 0;
+      width: 300px;
+      height: 300px;
+      background: rgba(20, 40, 90, 0.15);
+      border-radius: 50%;
+      filter: blur(80px);
+      margin: auto;
+      animation: pulse-slow 6s infinite alternate-reverse;
+    }
+    
+    .orb-highlight {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      filter: blur(20px);
+      top: 30%;
+      left: 30%;
+      animation: pulse-highlight 4s infinite alternate;
+    }
+    
+    @keyframes pulse-slow {
+      0% { opacity: 0.4; transform: scale(0.8); }
+      100% { opacity: 0.8; transform: scale(1.2); }
+    }
+    
+    @keyframes pulse-highlight {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 0.6; transform: scale(1.1); }
+    }
+    
+    /* Grid background */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    /* Form elements */
+    textarea, input[type="text"] {
+      color: white;
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(7, 16, 38, 0.6) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      transition: all 0.3s;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    textarea:focus, input[type="text"]:focus {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Layer effects */
+    .layer-effect {
+      position: relative;
+    }
+    
+    .layer-effect::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(59, 130, 246, 0.2), rgba(255, 255, 255, 0.05));
+      border-radius: 17px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .layer-effect:hover::before {
+      opacity: 1;
+    }
+    
+    /* Reflective edge effect */
+    .reflective-edge {
+      position: relative;
+    }
+    
+    .reflective-edge::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent);
+      pointer-events: none;
+    }
+    
+    /* Shine effects */
+    .shine-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .shine-effect::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(to bottom right, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(25deg);
+      animation: shine-sweep 8s infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes shine-sweep {
+      0% { transform: rotate(25deg) translateX(-100%); }
+      20% { transform: rotate(25deg) translateX(250%); }
+      100% { transform: rotate(25deg) translateX(250%); }
+    }
+    
+    /* White gleam spot */
+    .gleam-spot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      filter: blur(1px);
+      box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6);
+    }
+    
+    /* Customized scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, rgba(25, 49, 110, 0.8), rgba(7, 16, 38, 0.9));
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(to bottom, rgba(35, 65, 140, 0.8), rgba(15, 30, 60, 0.9));
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="glowing-orb" style="left: 20%; top: 30%;">
+    <div class="orb"></div>
+    <div class="orb-inner"></div>
+    <div class="orb-highlight"></div>
+  </div>
+  
+  <div class="glowing-orb" style="right: 25%; top: 70%;">
+    <div class="orb" style="opacity: 0.6; width: 400px; height: 400px;"></div>
+    <div class="orb-inner" style="width: 250px; height: 250px;"></div>
+    <div class="orb-highlight" style="width: 80px; height: 80px;"></div>
+  </div>
+  
+  <div class="bg-grid"></div>
+
+  <!-- Gleam spots -->
+  <div class="gleam-spot" style="top: 15%; left: 25%;"></div>
+  <div class="gleam-spot" style="top: 40%; left: 85%;"></div>
+  <div class="gleam-spot" style="top: 70%; left: 35%;"></div>
+  <div class="gleam-spot" style="top: 85%; left: 65%;"></div>
+  <div class="gleam-spot" style="top: 20%; left: 70%;"></div>
+
+  <header class="header-gradient p-8 mt-10 shine-effect">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="logo-container">
+        <!-- Logo emblem - using an SVG that mimics the image -->
+        <div class="logo-emblem">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="rgba(255, 255, 255, 0.8)">
+            <!-- Laurel wreath left side -->
+            <path d="M55,60 C45,75 40,95 38,110 C45,95 50,80 60,65 Z" />
+            <path d="M50,70 C40,85 35,100 33,120 C40,105 45,90 55,75 Z" />
+            <path d="M48,85 C38,100 33,115 31,135 C38,120 43,105 53,90 Z" />
+            <path d="M45,100 C35,115 30,130 28,150 C35,135 40,120 50,105 Z" />
+            <path d="M46,120 C36,135 31,150 29,170 C36,155 41,140 51,125 Z" />
+            <path d="M50,140 C40,155 35,170 33,190 C40,175 45,160 55,145 Z" />
+            
+            <!-- Laurel wreath right side -->
+            <path d="M145,60 C155,75 160,95 162,110 C155,95 150,80 140,65 Z" />
+            <path d="M150,70 C160,85 165,100 167,120 C160,105 155,90 145,75 Z" />
+            <path d="M152,85 C162,100 167,115 169,135 C162,120 157,105 147,90 Z" />
+            <path d="M155,100 C165,115 170,130 172,150 C165,135 160,120 150,105 Z" />
+            <path d="M154,120 C164,135 169,150 171,170 C164,155 159,140 149,125 Z" />
+            <path d="M150,140 C160,155 165,170 167,190 C160,175 155,160 145,145 Z" />
+            
+            <!-- Angel figure -->
+            <path d="M100,60 C92,60 85,67 85,75 L85,95 C85,103 92,110 100,110 C108,110 115,103 115,95 L115,75 C115,67 108,60 100,60 Z" />
+            
+            <!-- Wings -->
+            <path d="M85,75 C75,70 65,75 55,90 C65,80 75,75 85,80 Z" />
+            <path d="M115,75 C125,70 135,75 145,90 C135,80 125,75 115,80 Z" />
+            <path d="M80,80 C70,75 55,85 45,100 C60,85 70,80 80,85 Z" />
+            <path d="M120,80 C130,75 145,85 155,100 C140,85 130,80 120,85 Z" />
+            
+            <!-- Pedestal -->
+            <rect x="95" y="110" width="10" height="30" />
+            <rect x="85" y="140" width="30" height="10" />
+          </svg>
+        </div>
+        
+        <div class="divider w-1/2 mx-auto"></div>
+        
+        <div class="crown-icon">👑</div>
+        <h1 class="justice-title text-3xl md:text-5xl">JUSTICE MINDS</h1>
+        <p class="tagline">Guardians of the highest serving best interests</p>
+      </div>
+      
+      <div class="flex justify-center items-center mt-6">
+        <div class="timer-badge mx-auto shine-effect">
+          <div class="text-center uppercase font-semibold text-sm tracking-wider text-white mb-1">OFFICIAL TIMESTAMP</div>
+          <div class="flex justify-center items-center">
+            <div class="timer-pulse"></div>
+            <div id="live-clock" class="font-mono text-xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto p-4 relative z-10">
+    <!-- Sharable link container (initially hidden) -->
+    <div id="share-container" class="share-container layer-effect shine-effect reflective-edge">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h3 class="text-2xl font-semibold tracking-wider mb-2">EVIDENCE SUBMISSION</h3>
+          <div class="flex items-center mt-2">
+            <div class="bg-opacity-80 bg-blue-800 text-white text-xs font-semibold px-3 py-1 rounded-full mr-2 shadow-lg">OFFICIAL</div>
+            <div class="bg-opacity-80 bg-green-700 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">VERIFIED</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div id="submission-id" class="text-xl font-semibold"></div>
+          <div id="submission-date" class="text-sm text-gray-400 mt-1"></div>
+        </div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="mb-6">
+        <h4 class="font-semibold mb-2">SHAREABLE LINK</h4>
+        <div class="flex items-center bg-opacity-30 bg-blue-900 border border-opacity-15 border-white rounded-full p-2 shine-effect">
+          <input id="share-link" type="text" class="bg-transparent border-none outline-none flex-1 text-sm" readonly>
+          <button id="copy-link" class="official-button px-3 py-1 text-xs ml-2 rounded-full">COPY</button>
+        </div>
+        <p class="text-xs text-gray-400 mt-2

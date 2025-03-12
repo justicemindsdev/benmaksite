@@ -1,0 +1,208 @@
+/* Animation keyframes and effects */
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+  to { box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
+}
+
+@keyframes shine {
+  0% { left: -150%; }
+  30% { left: 150%; }
+  100% { left: 150%; }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  70% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+  100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+@keyframes pulse-slow {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 0.8; transform: scale(1.2); }
+}
+
+@keyframes pulse-highlight {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes shine-sweep {
+  0% { transform: rotate(25deg) translateX(-100%); }
+  20% { transform: rotate(25deg) translateX(250%); }
+  100% { transform: rotate(25deg) translateX(250%); }
+}
+
+/* Glowing orb effect */
+.glowing-orb {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.orb {
+  width: 500px;
+  height: 500px;
+  background: rgba(7, 20, 50, 0.25);
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: pulse-slow 8s infinite alternate;
+}
+
+.orb-inner {
+  position: absolute;
+  inset: 0;
+  width: 300px;
+  height: 300px;
+  background: rgba(20, 40, 90, 0.15);
+  border-radius: 50%;
+  filter: blur(80px);
+  margin: auto;
+  animation: pulse-slow 6s infinite alternate-reverse;
+}
+
+.orb-highlight {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(20px);
+  top: 30%;
+  left: 30%;
+  animation: pulse-highlight 4s infinite alternate;
+}
+
+/* Grid background */
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* White gleam spot */
+.gleam-spot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(1px);
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Shine effects */
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(to bottom right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(25deg);
+  animation: shine-sweep 8s infinite;
+  pointer-events: none;
+}
+
+/* Layer effects */
+.layer-effect {
+  position: relative;
+}
+
+.layer-effect::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(59, 130, 246, 0.2), rgba(255, 255, 255, 0.05));
+  border-radius: 17px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.layer-effect:hover::before {
+  opacity: 1;
+}
+
+/* Reflective edge effect */
+.reflective-edge {
+  position: relative;
+}
+
+.reflective-edge::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent);
+  pointer-events: none;
+}
+
+/* Timer pulse animation */
+.timer-pulse {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-right: 8px;
+  animation: pulse 2s infinite;
+}
+
+/* Button shine effect */
+.official-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.official-button:hover::before {
+  left: 150%;
+  transition: 0.5s;
+}
+
+/* Timer badge shine effect */
+.timer-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  opacity: 0.9;
+}
+
+.timer-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: skewX(-25deg);
+  animation: shine 6s infinite;
+}

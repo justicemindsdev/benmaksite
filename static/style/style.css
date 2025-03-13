@@ -483,6 +483,38 @@ body {
             padding-bottom: 5rem; /* Add padding at the bottom for the button */
         }
 
+        /* Mobile adjustments for modal content */
+        @media (max-width: 768px) {
+            .modal-content {
+                transform: none; /* Remove 3D transform on mobile for better readability */
+                padding: 1.5rem;
+                padding-bottom: 4rem; /* Slightly less padding at bottom on mobile */
+            }
+            
+            .modal-logo {
+                width: 100%;
+                height: auto;
+                opacity: 0.1; /* Slightly more transparent on mobile */
+            }
+            
+            .typewriter {
+                white-space: normal; /* Allow text to wrap on mobile */
+                animation: none; /* Disable typewriter animation on mobile */
+            }
+            
+            .sm\:text-6xl {
+                font-size: 2rem !important; /* Override any inline styles */
+            }
+            
+            .sm\:text-3xl {
+                font-size: 1.5rem !important; /* Override any inline styles */
+            }
+            
+            .sm\:text-xl {
+                font-size: 1rem !important; /* Override any inline styles */
+            }
+        }
+
         .modal-frame {
             position: relative;
             padding: 2rem;
@@ -715,6 +747,79 @@ body {
             color: rgba(255, 255, 255, 0.9);
         }
 
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-link {
+                font-size: 0.85rem;
+            }
+            
+            .dropdown-content {
+                min-width: 200px;
+            }
+            
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .close-button {
+                top: -3.5rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .modal {
+                padding: 1rem;
+            }
+            
+            .endorsement-content {
+                font-size: 0.9rem !important;
+                line-height: 1.5;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .nav-logo {
+                font-size: 1.25rem;
+            }
+            
+            .nav-links {
+                gap: 0.75rem;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1rem;
+                top: -2.5rem;
+            }
+            
+            .close-button {
+                top: -3rem;
+                right: 0;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+        
         @media (min-height: 800px) {
             .header {
                 padding-top: 5rem;

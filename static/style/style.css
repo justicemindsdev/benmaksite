@@ -500,8 +500,15 @@ body {
             .typewriter {
                 white-space: nowrap; /* Keep nowrap for typewriter effect */
                 overflow: hidden;
-                animation: typewriter 2s steps(40) forwards; /* Keep the animation */
+                animation: typewriter 3s steps(50) forwards; /* Slower animation with more steps for news-like effect */
                 max-width: 100%; /* Ensure it fits within the container */
+                border-right: 2px solid rgba(255, 255, 255, 0.75); /* Add blinking cursor effect */
+                animation: typewriter 3s steps(50) forwards, blinkCursor 0.75s step-end infinite;
+            }
+            
+            @keyframes blinkCursor {
+                from, to { border-color: transparent; }
+                50% { border-color: rgba(255, 255, 255, 0.75); }
             }
             
             .sm\:text-6xl {
@@ -752,17 +759,22 @@ body {
         /* Make cards smaller on mobile to show more at once */
         @media (max-width: 768px) {
             .slider {
-                width: 240px;
-                height: 360px;
+                width: 200px; /* Even smaller width */
+                height: 300px; /* Even smaller height */
             }
             
             .item-content {
-                transform: scale(0.8); /* Make cards 20% smaller */
+                transform: scale(0.7); /* Make cards 30% smaller */
             }
             
             /* Adjust the translateZ to bring cards closer together */
             .item {
                 transform-origin: center;
+            }
+            
+            /* Adjust the rotation speed to show more cards */
+            .slider-content {
+                animation: rotateSlider 20s linear infinite; /* Faster rotation */
             }
         }
         

@@ -109,13 +109,20 @@ document.addEventListener('DOMContentLoaded', function() {
  * Load user's data from Supabase
  */
 async function loadUserData() {
-  // Check if user is authenticated
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) {
-    return;
-  }
-  
   try {
+    // Check if Supabase is initialized
+    if (typeof supabase === 'undefined') {
+      console.error('Supabase client not initialized');
+      return;
+    }
+    
+    // Check if user is authenticated
+    const sessionResponse = await supabase.auth.getSession();
+    if (!sessionResponse.data.session) {
+      console.log('User not authenticated');
+      return;
+    }
+    
     // Get the user's evidence containers
     const result = await getEvidenceContainers();
     

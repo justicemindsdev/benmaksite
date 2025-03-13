@@ -8,24 +8,33 @@ const SUPABASE_URL = 'https://eflzhvxrymhfvyfbxkrw.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVmbHpodnhyeW1oZnZ5ZmJ4a3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTE5NTMsImV4cCI6MjA1MTkyNzk1M30.FP4H6bu8uDkgqq5-J3G8zBdl-OoQ20PFXKw6dFsP8PA';
 
 // Initialize Supabase client
-let supabase;
+// Make it a global variable so it can be accessed from other scripts
+window.supabase = null;
 
 /**
  * Initialize Supabase client
  * This function should be called when the page loads
  */
 function initializeSupabase() {
-  // Check if Supabase client is already loaded
-  if (typeof supabaseClient === 'undefined') {
-    console.error('Supabase client not loaded. Make sure to include the Supabase JavaScript library.');
-    return;
+  try {
+    // Check if Supabase client is already loaded
+    if (typeof supabaseClient === 'undefined') {
+      console.error('Supabase client not loaded. Make sure to include the Supabase JavaScript library.');
+      return;
+    }
+    
+    // Create Supabase client and make it globally accessible
+    window.supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    console.log('Supabase client initialized successfully');
+    
+    // Check for existing session
+    checkSession();
+    
+    return window.supabase;
+  } catch (error) {
+    console.error('Error initializing Supabase client:', error);
   }
-  
-  // Create Supabase client
-  supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  
-  // Check for existing session
-  checkSession();
 }
 
 /**

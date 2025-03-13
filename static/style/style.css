@@ -498,8 +498,10 @@ body {
             }
             
             .typewriter {
-                white-space: normal; /* Allow text to wrap on mobile */
-                animation: none; /* Disable typewriter animation on mobile */
+                white-space: nowrap; /* Keep nowrap for typewriter effect */
+                overflow: hidden;
+                animation: typewriter 2s steps(40) forwards; /* Keep the animation */
+                max-width: 100%; /* Ensure it fits within the container */
             }
             
             .sm\:text-6xl {
@@ -747,6 +749,23 @@ body {
             color: rgba(255, 255, 255, 0.9);
         }
 
+        /* Make cards smaller on mobile to show more at once */
+        @media (max-width: 768px) {
+            .slider {
+                width: 240px;
+                height: 360px;
+            }
+            
+            .item-content {
+                transform: scale(0.8); /* Make cards 20% smaller */
+            }
+            
+            /* Adjust the translateZ to bring cards closer together */
+            .item {
+                transform-origin: center;
+            }
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav-container {

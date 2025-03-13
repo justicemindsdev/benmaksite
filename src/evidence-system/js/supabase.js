@@ -7,10 +7,6 @@
 const SUPABASE_URL = 'https://eflzhvxrymhfvyfbxkrw.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVmbHpodnhyeW1oZnZ5ZmJ4a3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTE5NTMsImV4cCI6MjA1MTkyNzk1M30.FP4H6bu8uDkgqq5-J3G8zBdl-OoQ20PFXKw6dFsP8PA';
 
-// We'll store our initialized Supabase client here
-// The CDN already provides window.supabase, so we don't override it initially
-let supabaseClient = null;
-
 /**
  * Initialize Supabase client
  * This function should be called when the page loads
@@ -23,18 +19,18 @@ function initializeSupabase() {
       return;
     }
     
-    // Create Supabase client and make it globally accessible
-    window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Create Supabase client
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
-    // Set the global supabase variable to our client instance for easier access
-    window.supabase = window.supabaseClient;
+    // Store the client for use in other functions
+    window.supabaseClient = client;
     
     console.log('Supabase client initialized successfully');
     
     // Check for existing session
     checkSession();
     
-    return window.supabase;
+    return client;
   } catch (error) {
     console.error('Error initializing Supabase client:', error);
   }
@@ -47,12 +43,12 @@ function initializeSupabase() {
 async function checkSession() {
   try {
     // Make sure we have an initialized client
-    if (!window.supabase || !window.supabase.auth) {
+    if (!window.supabaseClient) {
       console.error('Supabase client not initialized');
       return null;
     }
     
-    const { data: { session }, error } = await window.supabase.auth.getSession();
+    const { data: { session }, error } = await window.supabaseClient.auth.getSession();
     
     if (error) {
       console.error('Error checking session:', error.message);
@@ -86,13 +82,13 @@ async function checkSession() {
 async function signUp(email, password, username) {
   try {
     // Make sure we have an initialized client
-    if (!window.supabase || !window.supabase.auth) {
+    if (!window.supabaseClient) {
       console.error('Supabase client not initialized');
       return { success: false, message: 'Supabase client not initialized' };
     }
     
     // Sign up the user
-    const { data: authData, error: authError } = await window.supabase.auth.signUp({
+    const { data: authData, error: authError } = await window.supabaseClient.auth.signUp({
       email,
       password,
     });
@@ -104,7 +100,7 @@ async function signUp(email, password, username) {
     
     // Create a profile for the user
     if (authData.user) {
-      const { error: profileError } = await window.supabase
+      const { error: profileError } = await window.supabaseClient
         .from('profiles')
         .insert([
           { 
@@ -136,12 +132,12 @@ async function signUp(email, password, username) {
 async function signInWithOAuth(provider) {
   try {
     // Make sure we have an initialized client
-    if (!window.supabase || !window.supabase.auth) {
+    if (!window.supabaseClient) {
       console.error('Supabase client not initialized');
       return { success: false, message: 'Supabase client not initialized' };
     }
     
-    const { data, error } = await window.supabase.auth.signInWithOAuth({
+    const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
       provider: provider,
       options: {
         redirectTo: window.location.origin + window.location.pathname,
@@ -171,12 +167,12 @@ async function signInWithOAuth(provider) {
 async function signIn(email, password) {
   try {
     // Make sure we have an initialized client
-    if (!window.supabase || !window.supabase.auth) {
+    if (!window.supabaseClient) {
       console.error('Supabase client not initialized');
       return { success: false, message: 'Supabase client not initialized' };
     }
     
-    const { data, error } = await window.supabase.auth.signInWithPassword({
+    const { data, error } = await window.supabaseClient.auth.signInWithPassword({
       email,
       password,
     });
@@ -201,12 +197,12 @@ async function signIn(email, password) {
 async function signOut() {
   try {
     // Make sure we have an initialized client
-    if (!window.supabase || !window.supabase.auth) {
+    if (!window.supabaseClient) {
       console.error('Supabase client not initialized');
       return { success: false, message: 'Supabase client not initialized' };
     }
     
-    const { error } = await window.supabase.auth.signOut();
+    const { error } = await window.supabaseClient.auth.signOut();
     
     if (error) {
       console.error('Error signing out:', error.message);
@@ -272,8 +268,14 @@ function updateUIForUnauthenticatedUser() {
  */
 async function createEvidenceContainer(title, description) {
   try {
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
     // Get the current user
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
     
     if (!user) {
       console.error('User not authenticated');
@@ -281,7 +283,7 @@ async function createEvidenceContainer(title, description) {
     }
     
     // Get the user's profile
-    const { data: profiles, error: profileError } = await supabase
+    const { data: profiles, error: profileError } = await window.supabaseClient
       .from('profiles')
       .select('id')
       .eq('user_id', user.id)
@@ -293,7 +295,7 @@ async function createEvidenceContainer(title, description) {
     }
     
     // Create the evidence container
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
       .from('evidence_containers')
       .insert([
         { 
@@ -326,7 +328,13 @@ async function createEvidenceContainer(title, description) {
  */
 async function addEvidenceItem(containerId, title, description, fileUrl) {
   try {
-    const { data, error } = await supabase
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
+    const { data, error } = await window.supabaseClient
       .from('evidence_items')
       .insert([
         { 
@@ -358,8 +366,14 @@ async function addEvidenceItem(containerId, title, description, fileUrl) {
  */
 async function uploadFile(file, path) {
   try {
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
     const filePath = `${path}/${Date.now()}_${file.name}`;
-    const { data, error } = await supabase.storage
+    const { data, error } = await window.supabaseClient.storage
       .from('evidence')
       .upload(filePath, file);
     
@@ -369,7 +383,7 @@ async function uploadFile(file, path) {
     }
     
     // Get public URL for the file
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = window.supabaseClient.storage
       .from('evidence')
       .getPublicUrl(filePath);
     
@@ -387,8 +401,14 @@ async function uploadFile(file, path) {
  */
 async function submitEvidence(containerId) {
   try {
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
     // Get the current user
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
     
     if (!user) {
       console.error('User not authenticated');
@@ -396,7 +416,7 @@ async function submitEvidence(containerId) {
     }
     
     // Get the user's profile
-    const { data: profiles, error: profileError } = await supabase
+    const { data: profiles, error: profileError } = await window.supabaseClient
       .from('profiles')
       .select('id')
       .eq('user_id', user.id)
@@ -408,7 +428,7 @@ async function submitEvidence(containerId) {
     }
     
     // Create the submission
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
       .from('submissions')
       .insert([
         { 
@@ -437,8 +457,14 @@ async function submitEvidence(containerId) {
  */
 async function getEvidenceContainers() {
   try {
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
     // Get the current user
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
     
     if (!user) {
       console.error('User not authenticated');
@@ -446,7 +472,7 @@ async function getEvidenceContainers() {
     }
     
     // Get the user's profile
-    const { data: profiles, error: profileError } = await supabase
+    const { data: profiles, error: profileError } = await window.supabaseClient
       .from('profiles')
       .select('id')
       .eq('user_id', user.id)
@@ -458,7 +484,7 @@ async function getEvidenceContainers() {
     }
     
     // Get the user's evidence containers
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
       .from('evidence_containers')
       .select('*')
       .eq('user_id', profiles.id);
@@ -482,7 +508,13 @@ async function getEvidenceContainers() {
  */
 async function getEvidenceItems(containerId) {
   try {
-    const { data, error } = await supabase
+    // Make sure we have an initialized client
+    if (!window.supabaseClient) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
+    const { data, error } = await window.supabaseClient
       .from('evidence_items')
       .select('*')
       .eq('container_id', containerId);

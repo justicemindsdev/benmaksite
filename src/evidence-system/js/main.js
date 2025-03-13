@@ -1,7 +1,6 @@
 /**
  * Main JavaScript file for the Evidence Submission System
  * Handles initialization and global variables
- * Now integrated with Supabase
  */
 
 // Global variables
@@ -41,68 +40,86 @@ function generateUniqueId() {
 document.addEventListener('DOMContentLoaded', function() {
   // Set up the live clock
   const clockElement = document.getElementById('live-clock');
-  
-  function updateClock() {
-    const now = new Date();
-    clockElement.textContent = now.toLocaleString('en-GB', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      second: '2-digit',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour12: false
-    });
+  if (clockElement) {
+    function updateClock() {
+      const now = new Date();
+      clockElement.textContent = now.toLocaleString('en-GB', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: '2-digit',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour12: false
+      });
+    }
+    
+    // Update clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
   }
-  
-  // Update clock immediately and then every second
-  updateClock();
-  setInterval(updateClock, 1000);
   
   // Generate and set unique document ID
   const uniqueIdElement = document.getElementById('unique-id');
-  uniqueIdElement.textContent = generateUniqueId();
+  if (uniqueIdElement) {
+    uniqueIdElement.textContent = generateUniqueId();
+  }
   
   // Set up add container button
   const addContainerButton = document.getElementById('add-container');
-  addContainerButton.addEventListener('click', addContainer);
+  if (addContainerButton && typeof addContainer === 'function') {
+    addContainerButton.addEventListener('click', addContainer);
+  }
   
   // Set up send evidence button
   const sendEvidenceButton = document.getElementById('send-evidence');
-  sendEvidenceButton.addEventListener('click', handleEvidenceSubmission);
+  if (sendEvidenceButton && typeof handleEvidenceSubmission === 'function') {
+    sendEvidenceButton.addEventListener('click', handleEvidenceSubmission);
+  }
   
   // Set up copy link button
   const copyLinkButton = document.getElementById('copy-link');
-  copyLinkButton.addEventListener('click', function() {
-    const linkInput = document.getElementById('share-link');
-    linkInput.select();
-    document.execCommand('copy');
-    
-    // Show copied feedback
-    const originalText = copyLinkButton.textContent;
-    copyLinkButton.textContent = 'COPIED!';
-    setTimeout(() => {
-      copyLinkButton.textContent = originalText;
-    }, 2000);
-  });
+  if (copyLinkButton) {
+    copyLinkButton.addEventListener('click', function() {
+      const linkInput = document.getElementById('share-link');
+      if (linkInput) {
+        linkInput.select();
+        document.execCommand('copy');
+        
+        // Show copied feedback
+        const originalText = copyLinkButton.textContent;
+        copyLinkButton.textContent = 'COPIED!';
+        setTimeout(() => {
+          copyLinkButton.textContent = originalText;
+        }, 2000);
+      }
+    });
+  }
   
   // Set up back to editor button
   const backToEditButton = document.getElementById('back-to-edit');
-  backToEditButton.addEventListener('click', function() {
-    document.getElementById('share-container').style.display = 'none';
-    window.scrollTo(0, 0);
-  });
+  if (backToEditButton) {
+    backToEditButton.addEventListener('click', function() {
+      const shareContainer = document.getElementById('share-container');
+      if (shareContainer) {
+        shareContainer.style.display = 'none';
+        window.scrollTo(0, 0);
+      }
+    });
+  }
   
   // Initialize Supabase
   try {
-    initializeSupabase();
-    console.log('Supabase initialized');
+    if (typeof initializeSupabase === 'function') {
+      initializeSupabase();
+      console.log('Supabase initialized');
+      
+      // Load user's existing evidence containers if authenticated
+      loadUserData();
+    }
   } catch (error) {
     console.error('Error initializing Supabase:', error);
   }
-  
-  // Load user's existing evidence containers if authenticated
-  loadUserData();
 });
 
 /**
@@ -111,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadUserData() {
   try {
     // Check if Supabase is initialized
-    if (typeof supabase === 'undefined') {
+    if (typeof supabase === 'undefined' || supabase === null) {
       console.error('Supabase client not initialized');
       return;
     }
@@ -123,15 +140,18 @@ async function loadUserData() {
       return;
     }
     
-    // Get the user's evidence containers
-    const result = await getEvidenceContainers();
-    
-    if (result.success && result.containers.length > 0) {
-      console.log('User has existing evidence containers:', result.containers);
+    // Check if getEvidenceContainers function exists
+    if (typeof getEvidenceContainers === 'function') {
+      // Get the user's evidence containers
+      const result = await getEvidenceContainers();
       
-      // Show existing containers
-      // This would typically create container elements for each existing container
-      // For now, we'll just log them
+      if (result.success && result.containers.length > 0) {
+        console.log('User has existing evidence containers:', result.containers);
+        
+        // Show existing containers
+        // This would typically create container elements for each existing container
+        // For now, we'll just log them
+      }
     }
   } catch (error) {
     console.error('Error loading user data:', error);

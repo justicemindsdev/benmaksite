@@ -1,0 +1,541 @@
+ <!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUSTICE MINDS - My Evidence</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Modularized CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="glowing-orb" style="left: 20%; top: 30%;">
+    <div class="orb"></div>
+    <div class="orb-inner"></div>
+    <div class="orb-highlight"></div>
+  </div>
+  
+  <div class="glowing-orb" style="right: 25%; top: 70%;">
+    <div class="orb" style="opacity: 0.6; width: 400px; height: 400px;"></div>
+    <div class="orb-inner" style="width: 250px; height: 250px;"></div>
+    <div class="orb-highlight" style="width: 80px; height: 80px;"></div>
+  </div>
+  
+  <div class="bg-grid"></div>
+
+  <!-- Gleam spots -->
+  <div class="gleam-spot" style="top: 15%; left: 25%;"></div>
+  <div class="gleam-spot" style="top: 40%; left: 85%;"></div>
+  <div class="gleam-spot" style="top: 70%; left: 35%;"></div>
+  <div class="gleam-spot" style="top: 85%; left: 65%;"></div>
+  <div class="gleam-spot" style="top: 20%; left: 70%;"></div>
+
+  <header class="header-gradient p-8 mt-10 shine-effect">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <img src="images/logofinal.png" alt="Justice Minds Logo" class="h-16 mr-4">
+          <div>
+            <h1 class="justice-title text-2xl md:text-3xl">JUSTICE MINDS</h1>
+            <p class="tagline text-sm">Evidence Collection System</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center">
+          <div class="timer-badge shine-effect mr-6">
+            <div class="text-center uppercase font-semibold text-xs tracking-wider text-white mb-1">TIMESTAMP</div>
+            <div class="flex justify-center items-center">
+              <div class="timer-pulse"></div>
+              <div id="live-clock" class="font-mono text-sm"></div>
+            </div>
+          </div>
+          
+          <div class="flex items-center">
+            <span class="mr-2">Logged in as:</span>
+            <span id="user-email" class="font-semibold"></span>
+            <button id="sign-out-btn" class="official-button px-3 py-1 text-xs ml-4 rounded-full">SIGN OUT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto p-4 relative z-10">
+    <div class="mb-8 p-6 container-box layer-effect shine-effect reflective-edge">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold tracking-wider">MY EVIDENCE</h2>
+        <div id="document-id" class="text-sm font-mono">DOCUMENT ID: JM-<span id="unique-id"></span></div>
+      </div>
+      
+      <div class="divider mb-6"></div>
+      
+      <div class="flex justify-between items-center mb-6">
+        <button id="back-to-dashboard" class="official-button px-5 py-2 rounded-full shine-effect">
+          ← BACK TO DASHBOARD
+        </button>
+        
+        <button id="new-submission-btn" class="official-button px-6 py-3 rounded-full shine-effect">
+          + NEW SUBMISSION
+        </button>
+      </div>
+      
+      <!-- Evidence containers will be dynamically added here -->
+      <div id="evidence-containers" class="space-y-6">
+        <div class="text-center text-gray-400 py-8">
+          <p>Loading evidence containers...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for viewing evidence details -->
+  <div id="evidence-modal" class="modal">
+    <div class="modal-content layer-effect shine-effect reflective-edge">
+      <button class="absolute right-6 top-6 text-gray-400 hover:text-white text-2xl" id="close-modal">&times;</button>
+      <div id="modal-content-container" class="p-6">
+        <h3 class="text-2xl font-semibold tracking-wider mb-6 text-center">EVIDENCE DETAILS</h3>
+        <div id="evidence-details-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-gradient py-8 text-center mt-10 relative z-10 shine-effect">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-3xl mb-2 justice-title">JUSTICE MINDS</div>
+      <p class="tagline mb-4">Evidence Collection System</p>
+      
+      <div class="divider"></div>
+      
+      <div class="text-xs text-gray-400 mt-4">
+        <p>This document is protected under UK law. Unauthorised alteration constitutes an offence under the Fraud Act 2006.</p>
+        <p class="mt-1">Crown Copyright © 2023 HM Courts & Tribunals Service</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modularized JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/supabase.js"></script>
+  
+  <script>
+    // Initialize the application when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize animations
+      if (typeof initializeAnimations === 'function') {
+        initializeAnimations();
+      } else {
+        console.error('initializeAnimations function not found');
+      }
+      
+      // Generate and set unique document ID
+      const uniqueIdElement = document.getElementById('unique-id');
+      if (uniqueIdElement) {
+        uniqueIdElement.textContent = typeof generateUniqueId === 'function' ? 
+          generateUniqueId() : Math.random().toString(36).substring(2, 10).toUpperCase();
+      }
+      
+      // Set up the live clock
+      const clockElement = document.getElementById('live-clock');
+      if (clockElement) {
+        function updateClock() {
+          const now = new Date();
+          clockElement.textContent = now.toLocaleString('en-GB', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            second: '2-digit',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour12: false
+          });
+        }
+        
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+      }
+      
+      // Initialize Supabase
+      try {
+        if (typeof initializeSupabase === 'function') {
+          initializeSupabase();
+          console.log('Supabase initialized');
+          
+          // Check if user is authenticated
+          setTimeout(checkAuthentication, 500); // Give Supabase time to initialize
+        } else {
+          console.error('initializeSupabase function not found');
+          showErrorMessage('Supabase initialization function not found');
+        }
+      } catch (error) {
+        console.error('Error initializing Supabase:', error);
+        showErrorMessage('Error initializing Supabase: ' + error.message);
+      }
+      
+      // Set up back to dashboard button
+      const backToDashboardButton = document.getElementById('back-to-dashboard');
+      if (backToDashboardButton) {
+        backToDashboardButton.addEventListener('click', function() {
+          window.location.href = 'dashboard.html';
+        });
+      }
+      
+      // Set up new submission button
+      const newSubmissionButton = document.getElementById('new-submission-btn');
+      if (newSubmissionButton) {
+        newSubmissionButton.addEventListener('click', function() {
+          window.location.href = 'submission.html';
+        });
+      }
+      
+      // Sign out button
+      const signOutBtn = document.getElementById('sign-out-btn');
+      if (signOutBtn) {
+        signOutBtn.addEventListener('click', async function() {
+          try {
+            if (typeof signOut === 'function') {
+              const result = await signOut();
+              
+              if (result.success) {
+                // Redirect to login page
+                window.location.href = 'index.html';
+              } else {
+                console.error('Error signing out:', result.message);
+              }
+            } else {
+              console.error('signOut function not found');
+              alert('Error: Sign out function not available');
+            }
+          } catch (error) {
+            console.error('Error signing out:', error);
+            alert('Error signing out: ' + error.message);
+          }
+        });
+      }
+      
+      // Set up modal close button
+      const closeModalButton = document.getElementById('close-modal');
+      if (closeModalButton) {
+        closeModalButton.addEventListener('click', function() {
+          const modal = document.getElementById('evidence-modal');
+          if (modal) {
+            modal.style.display = 'none';
+          }
+        });
+      }
+    });
+    
+    // Check if user is authenticated
+    async function checkAuthentication() {
+      try {
+        // Check if Supabase is initialized
+        if (typeof supabase === 'undefined' || supabase === null) {
+          console.error('Supabase client not initialized');
+          showErrorMessage('Supabase client not initialized');
+          return;
+        }
+        
+        // Check if user is authenticated
+        const sessionResponse = await supabase.auth.getSession();
+        if (!sessionResponse.data.session) {
+          console.log('User not authenticated, redirecting to login page');
+          window.location.href = 'index.html';
+          return;
+        }
+        
+        // Update user email display
+        const userEmailElement = document.getElementById('user-email');
+        if (userEmailElement) {
+          userEmailElement.textContent = sessionResponse.data.session.user.email;
+        }
+        
+        // Load user's evidence containers
+        loadEvidenceContainers();
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        showErrorMessage('Error checking authentication: ' + error.message);
+      }
+    }
+    
+    // Load evidence containers
+    async function loadEvidenceContainers() {
+      const evidenceContainersElement = document.getElementById('evidence-containers');
+      if (!evidenceContainersElement) return;
+      
+      try {
+        // Check if Supabase is initialized
+        if (typeof supabase === 'undefined' || supabase === null) {
+          console.error('Supabase client not initialized');
+          showErrorMessage('Supabase client not initialized');
+          return;
+        }
+        
+        // Check if getEvidenceContainers function exists
+        if (typeof getEvidenceContainers !== 'function') {
+          console.error('getEvidenceContainers function not found');
+          showErrorMessage('Evidence container loading function not available');
+          return;
+        }
+        
+        // Get user's evidence containers
+        const result = await getEvidenceContainers();
+        
+        if (result.success) {
+          // Clear loading message
+          evidenceContainersElement.innerHTML = '';
+          
+          if (result.containers.length === 0) {
+            // Show no evidence message
+            evidenceContainersElement.innerHTML = `
+              <div class="text-center text-gray-400 py-8">
+                <p>You have no evidence containers yet.</p>
+                <p class="mt-2">Click the "NEW SUBMISSION" button to create one.</p>
+              </div>
+            `;
+            return;
+          }
+          
+          // Add each container to the page
+          result.containers.forEach(container => {
+            const containerElement = document.createElement('div');
+            containerElement.className = 'container-box p-6 relative layer-effect shine-effect reflective-edge';
+            
+            // Format date
+            const createdAt = new Date(container.created_at);
+            const formattedDate = createdAt.toLocaleString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
+            
+            containerElement.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-xl font-semibold tracking-wider mb-2">${container.title || 'Untitled Evidence'}</h3>
+                  <div class="text-sm text-gray-400 font-mono">${formattedDate}</div>
+                  <p class="mt-3">${container.description || 'No description provided.'}</p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-opacity-80 bg-blue-800 text-white text-xs font-semibold px-3 py-1 rounded-full mr-2 shadow-lg">OFFICIAL</div>
+                  <div class="bg-opacity-80 bg-green-700 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">VERIFIED</div>
+                </div>
+              </div>
+              
+              <div class="divider my-4"></div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-sm">Container ID: ${container.id}</span>
+                </div>
+                <button class="view-evidence-btn official-button px-5 py-2 rounded-full shine-effect" data-container-id="${container.id}">
+                  VIEW EVIDENCE
+                </button>
+              </div>
+            `;
+            
+            evidenceContainersElement.appendChild(containerElement);
+            
+            // Add event listener to view button
+            const viewButton = containerElement.querySelector('.view-evidence-btn');
+            if (viewButton) {
+              viewButton.addEventListener('click', function() {
+                viewEvidenceDetails(container.id);
+              });
+            }
+          });
+        } else {
+          // Show error message
+          showErrorMessage('Error loading evidence containers: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error loading evidence containers:', error);
+        showErrorMessage('Error loading evidence containers: ' + error.message);
+      }
+    }
+    
+    // View evidence details
+    async function viewEvidenceDetails(containerId) {
+      const modal = document.getElementById('evidence-modal');
+      const detailsContainer = document.getElementById('evidence-details-container');
+      
+      if (!modal || !detailsContainer) return;
+      
+      // Show loading message
+      detailsContainer.innerHTML = `
+        <div class="text-center text-gray-400 py-8">
+          <p>Loading evidence details...</p>
+        </div>
+      `;
+      
+      // Show modal
+      modal.style.display = 'flex';
+      
+      try {
+        // Check if Supabase is initialized
+        if (typeof supabase === 'undefined' || supabase === null) {
+          throw new Error('Supabase client not initialized');
+        }
+        
+        // Check if getEvidenceContainers function exists
+        if (typeof getEvidenceContainers !== 'function') {
+          throw new Error('getEvidenceContainers function not found');
+        }
+        
+        // Check if getEvidenceItems function exists
+        if (typeof getEvidenceItems !== 'function') {
+          throw new Error('getEvidenceItems function not found');
+        }
+        
+        // Get container details
+        const containerResult = await getEvidenceContainers();
+        
+        if (!containerResult.success) {
+          throw new Error(containerResult.message);
+        }
+        
+        // Find the container
+        const container = containerResult.containers.find(c => c.id === containerId);
+        
+        if (!container) {
+          throw new Error('Container not found');
+        }
+        
+        // Get evidence items
+        const itemsResult = await getEvidenceItems(containerId);
+        
+        if (!itemsResult.success) {
+          throw new Error(itemsResult.message);
+        }
+        
+        // Format date
+        const createdAt = new Date(container.created_at);
+        const formattedDate = createdAt.toLocaleString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+        
+        // Build details HTML
+        let detailsHTML = `
+          <div class="mb-6">
+            <h4 class="text-xl font-semibold tracking-wider mb-2">${container.title || 'Untitled Evidence'}</h4>
+            <div class="text-sm text-gray-400 font-mono mb-2">${formattedDate}</div>
+            <p>${container.description || 'No description provided.'}</p>
+          </div>
+          
+          <div class="divider mb-6"></div>
+          
+          <h4 class="text-lg font-semibold tracking-wider mb-4">Evidence Items</h4>
+        `;
+        
+        if (itemsResult.items.length === 0) {
+          detailsHTML += `
+            <div class="text-center text-gray-400 py-4">
+              <p>No evidence items in this container.</p>
+            </div>
+          `;
+        } else {
+          detailsHTML += `<div class="space-y-4">`;
+          
+          itemsResult.items.forEach(item => {
+            // Format date
+            const itemCreatedAt = new Date(item.created_at);
+            const itemFormattedDate = itemCreatedAt.toLocaleString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
+            
+            detailsHTML += `
+              <div class="border border-opacity-20 border-white rounded-xl p-4 shine-effect reflective-edge" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(7, 16, 38, 0.6));">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h5 class="font-semibold mb-1">${item.title || 'Untitled Item'}</h5>
+                    <div class="text-xs text-gray-400 font-mono">${itemFormattedDate}</div>
+                  </div>
+                  <div class="bg-opacity-80 bg-blue-800 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-lg">EVIDENCE</div>
+                </div>
+                
+                <p class="mt-2">${item.description || 'No description provided.'}</p>
+                
+                ${item.file_url ? `
+                  <div class="mt-3">
+                    <a href="${item.file_url}" target="_blank" class="text-blue-400 hover:underline flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      View File
+                    </a>
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          });
+          
+          detailsHTML += `</div>`;
+        }
+        
+        // Add download button
+        detailsHTML += `
+          <div class="mt-8 text-center">
+            <button id="download-evidence-btn" class="official-button px-6 py-3 rounded-full shine-effect">
+              DOWNLOAD EVIDENCE PACKAGE
+            </button>
+          </div>
+        `;
+        
+        // Update details container
+        detailsContainer.innerHTML = detailsHTML;
+        
+        // Add event listener to download button
+        const downloadButton = document.getElementById('download-evidence-btn');
+        if (downloadButton) {
+          downloadButton.addEventListener('click', function() {
+            alert('Evidence package download functionality would be implemented here.');
+          });
+        }
+      } catch (error) {
+        console.error('Error viewing evidence details:', error);
+        
+        // Show error message in modal
+        detailsContainer.innerHTML = `
+          <div class="text-center text-red-500 py-8">
+            <p>Error loading evidence details: ${error.message}</p>
+          </div>
+        `;
+      }
+    }
+    
+    // Show error message in the evidence containers area
+    function showErrorMessage(message) {
+      const evidenceContainersElement = document.getElementById('evidence-containers');
+      if (evidenceContainersElement) {
+        evidenceContainersElement.innerHTML = `
+          <div class="text-center text-red-500 py-8">
+            <p>${message}</p>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

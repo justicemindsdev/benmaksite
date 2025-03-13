@@ -1,4 +1,4 @@
-npm install -g live-server/**
+/**
  * File Handling JavaScript file for the Evidence Submission System
  * Handles file uploads and previews
  * Now integrated with Supabase Storage

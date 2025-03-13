@@ -7,9 +7,9 @@
 const SUPABASE_URL = 'https://eflzhvxrymhfvyfbxkrw.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVmbHpodnhyeW1oZnZ5ZmJ4a3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTE5NTMsImV4cCI6MjA1MTkyNzk1M30.FP4H6bu8uDkgqq5-J3G8zBdl-OoQ20PFXKw6dFsP8PA';
 
-// Initialize Supabase client
-// Make it a global variable so it can be accessed from other scripts
-window.supabase = null;
+// We'll store our initialized Supabase client here
+// The CDN already provides window.supabase, so we don't override it initially
+let supabaseClient = null;
 
 /**
  * Initialize Supabase client
@@ -17,14 +17,17 @@ window.supabase = null;
  */
 function initializeSupabase() {
   try {
-    // Check if Supabase client is already loaded
-    if (typeof supabaseClient === 'undefined') {
+    // The Supabase CDN script creates a global 'supabase' object
+    if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function') {
       console.error('Supabase client not loaded. Make sure to include the Supabase JavaScript library.');
       return;
     }
     
     // Create Supabase client and make it globally accessible
-    window.supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Set the global supabase variable to our client instance for easier access
+    window.supabase = window.supabaseClient;
     
     console.log('Supabase client initialized successfully');
     
@@ -39,27 +42,37 @@ function initializeSupabase() {
 
 /**
  * Check if user is already logged in
+ * @returns {Promise<Object|null>} The session object or null if not logged in
  */
 async function checkSession() {
   try {
-    const { data: { session }, error } = await supabase.auth.getSession();
+    // Make sure we have an initialized client
+    if (!window.supabase || !window.supabase.auth) {
+      console.error('Supabase client not initialized');
+      return null;
+    }
+    
+    const { data: { session }, error } = await window.supabase.auth.getSession();
     
     if (error) {
       console.error('Error checking session:', error.message);
-      return;
+      return null;
     }
     
     if (session) {
       // User is logged in
       console.log('User is logged in:', session.user);
       updateUIForAuthenticatedUser(session.user);
+      return session;
     } else {
       // User is not logged in
       console.log('User is not logged in');
       updateUIForUnauthenticatedUser();
+      return null;
     }
   } catch (error) {
     console.error('Error checking session:', error.message);
+    return null;
   }
 }
 
@@ -68,11 +81,18 @@ async function checkSession() {
  * @param {string} email - User's email
  * @param {string} password - User's password
  * @param {string} username - User's username
+ * @returns {Promise<Object>} Result object with success flag and user data or error message
  */
 async function signUp(email, password, username) {
   try {
+    // Make sure we have an initialized client
+    if (!window.supabase || !window.supabase.auth) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
     // Sign up the user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    const { data: authData, error: authError } = await window.supabase.auth.signUp({
       email,
       password,
     });
@@ -84,7 +104,7 @@ async function signUp(email, password, username) {
     
     // Create a profile for the user
     if (authData.user) {
-      const { error: profileError } = await supabase
+      const { error: profileError } = await window.supabase
         .from('profiles')
         .insert([
           { 
@@ -111,10 +131,17 @@ async function signUp(email, password, username) {
 /**
  * Sign in with OAuth provider (Google or Microsoft)
  * @param {string} provider - The OAuth provider ('google' or 'microsoft')
+ * @returns {Promise<Object>} Result object with success flag and user data or error message
  */
 async function signInWithOAuth(provider) {
   try {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    // Make sure we have an initialized client
+    if (!window.supabase || !window.supabase.auth) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
+    const { data, error } = await window.supabase.auth.signInWithOAuth({
       provider: provider,
       options: {
         redirectTo: window.location.origin + window.location.pathname,
@@ -139,10 +166,17 @@ async function signInWithOAuth(provider) {
  * Sign in an existing user
  * @param {string} email - User's email
  * @param {string} password - User's password
+ * @returns {Promise<Object>} Result object with success flag and user data or error message
  */
 async function signIn(email, password) {
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    // Make sure we have an initialized client
+    if (!window.supabase || !window.supabase.auth) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
+    const { data, error } = await window.supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -162,10 +196,17 @@ async function signIn(email, password) {
 
 /**
  * Sign out the current user
+ * @returns {Promise<Object>} Result object with success flag or error message
  */
 async function signOut() {
   try {
-    const { error } = await supabase.auth.signOut();
+    // Make sure we have an initialized client
+    if (!window.supabase || !window.supabase.auth) {
+      console.error('Supabase client not initialized');
+      return { success: false, message: 'Supabase client not initialized' };
+    }
+    
+    const { error } = await window.supabase.auth.signOut();
     
     if (error) {
       console.error('Error signing out:', error.message);
@@ -227,6 +268,7 @@ function updateUIForUnauthenticatedUser() {
  * Create a new evidence container
  * @param {string} title - Container title
  * @param {string} description - Container description
+ * @returns {Promise<Object>} Result object with success flag and container data or error message
  */
 async function createEvidenceContainer(title, description) {
   try {
@@ -280,6 +322,7 @@ async function createEvidenceContainer(title, description) {
  * @param {string} title - Evidence title
  * @param {string} description - Evidence description
  * @param {string} fileUrl - URL to the evidence file
+ * @returns {Promise<Object>} Result object with success flag and item data or error message
  */
 async function addEvidenceItem(containerId, title, description, fileUrl) {
   try {
@@ -311,6 +354,7 @@ async function addEvidenceItem(containerId, title, description, fileUrl) {
  * Upload a file to Supabase storage
  * @param {File} file - File to upload
  * @param {string} path - Storage path
+ * @returns {Promise<Object>} Result object with success flag and URL or error message
  */
 async function uploadFile(file, path) {
   try {
@@ -339,6 +383,7 @@ async function uploadFile(file, path) {
 /**
  * Submit evidence container
  * @param {number} containerId - Container ID
+ * @returns {Promise<Object>} Result object with success flag and submission data or error message
  */
 async function submitEvidence(containerId) {
   try {
@@ -388,6 +433,7 @@ async function submitEvidence(containerId) {
 
 /**
  * Get user's evidence containers
+ * @returns {Promise<Object>} Result object with success flag and containers data or error message
  */
 async function getEvidenceContainers() {
   try {
@@ -432,6 +478,7 @@ async function getEvidenceContainers() {
 /**
  * Get evidence items for a container
  * @param {number} containerId - Container ID
+ * @returns {Promise<Object>} Result object with success flag and items data or error message
  */
 async function getEvidenceItems(containerId) {
   try {

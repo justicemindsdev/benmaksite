@@ -1,105 +1,138 @@
-/* Animation keyframes and effects */
-
-@keyframes glow {
-  from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-  to { box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
-}
-
-@keyframes shine {
-  0% { left: -150%; }
-  30% { left: 150%; }
-  100% { left: 150%; }
-}
-
-@keyframes pulse {
-  0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-  70% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
-  100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-}
-
-@keyframes pulse-slow {
-  0% { opacity: 0.4; transform: scale(0.8); }
-  100% { opacity: 0.8; transform: scale(1.2); }
-}
-
-@keyframes pulse-highlight {
-  0% { opacity: 0.2; transform: scale(0.8); }
-  100% { opacity: 0.6; transform: scale(1.1); }
-}
-
-@keyframes shine-sweep {
-  0% { transform: rotate(25deg) translateX(-100%); }
-  20% { transform: rotate(25deg) translateX(250%); }
-  100% { transform: rotate(25deg) translateX(250%); }
-}
+/**
+ * Animations CSS for the Evidence Submission System
+ * Contains all animations, transitions, and visual effects
+ */
 
 /* Glowing orb effect */
 .glowing-orb {
   position: fixed;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(60px);
   pointer-events: none;
-  z-index: 1;
 }
 
 .orb {
-  width: 500px;
-  height: 500px;
-  background: rgba(7, 20, 50, 0.25);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(30, 64, 175, 0.1) 70%, transparent 100%);
   border-radius: 50%;
-  filter: blur(100px);
-  animation: pulse-slow 8s infinite alternate;
+  position: absolute;
+  animation: float 20s ease-in-out infinite;
 }
 
 .orb-inner {
-  position: absolute;
-  inset: 0;
-  width: 300px;
-  height: 300px;
-  background: rgba(20, 40, 90, 0.15);
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(30, 64, 175, 0.2) 70%, transparent 100%);
   border-radius: 50%;
-  filter: blur(80px);
-  margin: auto;
-  animation: pulse-slow 6s infinite alternate-reverse;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-slow 10s ease-in-out infinite;
 }
 
 .orb-highlight {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
   border-radius: 50%;
-  filter: blur(20px);
+  position: absolute;
   top: 30%;
   left: 30%;
-  animation: pulse-highlight 4s infinite alternate;
+  animation: pulse-fast 5s ease-in-out infinite;
 }
 
-/* Grid background */
-.bg-grid {
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(10px) translateX(-15px);
+  }
+  75% {
+    transform: translateY(15px) translateX(5px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-fast {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+}
+
+/* Gleam spot effect */
+.gleam-spot {
   position: fixed;
+  width: 2px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+  z-index: -1;
+  animation: twinkle 4s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* Layer effect */
+.layer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.layer-effect::before {
+  content: '';
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  z-index: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  z-index: 1;
 }
 
-/* White gleam spot */
-.gleam-spot {
+.layer-effect::after {
+  content: '';
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background-color: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  filter: blur(1px);
-  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  z-index: 1;
 }
 
-/* Shine effects */
+/* Shine effect */
 .shine-effect {
   position: relative;
   overflow: hidden;
@@ -108,101 +141,96 @@
 .shine-effect::before {
   content: '';
   position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 50%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
   height: 200%;
-  background: linear-gradient(to bottom right, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transform: rotate(25deg);
-  animation: shine-sweep 8s infinite;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
   pointer-events: none;
+  z-index: 2;
+  animation: shine 6s infinite;
 }
 
-/* Layer effects */
-.layer-effect {
-  position: relative;
+@keyframes shine {
+  0% {
+    transform: rotate(30deg) translateX(-100%);
+  }
+  20%, 100% {
+    transform: rotate(30deg) translateX(100%);
+  }
 }
 
-.layer-effect::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(59, 130, 246, 0.2), rgba(255, 255, 255, 0.05));
-  border-radius: 17px;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.layer-effect:hover::before {
-  opacity: 1;
-}
-
-/* Reflective edge effect */
+/* Reflective edge */
 .reflective-edge {
   position: relative;
 }
 
-.reflective-edge::after {
+.reflective-edge::before {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 20%;
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent);
-  pointer-events: none;
-}
-
-/* Timer pulse animation */
-.timer-pulse {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
-  margin-right: 8px;
-  animation: pulse 2s infinite;
-}
-
-/* Button shine effect */
-.official-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 40%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transform: skewX(-25deg);
-  transition: 0.5s;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.official-button:hover::before {
-  left: 150%;
-  transition: 0.5s;
-}
-
-/* Timer badge shine effect */
-.timer-badge::before {
-  content: '';
-  position: absolute;
+/* Modal animation */
+.modal {
+  display: none;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
-  opacity: 0.9;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
 }
 
-.timer-badge::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  transform: skewX(-25deg);
-  animation: shine 6s infinite;
+.modal-content {
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(145deg, rgba(10, 22, 50, 0.95), rgba(0, 0, 0, 0.98));
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  position: relative;
+  transform: scale(0.9);
+  animation: scaleIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
 }

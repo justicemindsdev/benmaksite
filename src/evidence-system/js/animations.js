@@ -1,58 +1,60 @@
 /**
- * Animations JavaScript file for the Evidence Submission System
- * Handles visual effects and animations
+ * Animations JavaScript for the Evidence Submission System
+ * Handles dynamic animations and visual effects
  */
 
 /**
- * Initialize all animations
+ * Initialize animations for the page
+ * This function should be called when the DOM is loaded
  */
 function initializeAnimations() {
-  animateGlowingOrbs();
-  animateGleamSpots();
-}
-
-/**
- * Animate the glowing orbs
- */
-function animateGlowingOrbs() {
-  const orbs = document.querySelectorAll('.glowing-orb');
-  
-  function moveOrb(orb, index) {
-    const x = 30 + Math.sin(Date.now() / 4000 + index) * 20;
-    const y = 30 + Math.cos(Date.now() / 3000 + index) * 20;
-    orb.style.left = `${x}%`;
-    orb.style.top = `${y}%`;
+  // Add random gleam spots
+  for (let i = 0; i < 10; i++) {
+    const gleamSpot = document.createElement('div');
+    gleamSpot.className = 'gleam-spot';
+    gleamSpot.style.top = `${Math.random() * 100}%`;
+    gleamSpot.style.left = `${Math.random() * 100}%`;
+    gleamSpot.style.animationDelay = `${Math.random() * 4}s`;
+    document.body.appendChild(gleamSpot);
   }
   
-  function animateOrbs() {
-    orbs.forEach((orb, index) => {
-      moveOrb(orb, index);
-    });
-    requestAnimationFrame(animateOrbs);
-  }
-  
-  animateOrbs();
-}
-
-/**
- * Animate the gleam spots
- */
-function animateGleamSpots() {
-  const gleamSpots = document.querySelectorAll('.gleam-spot');
-  
-  function animateGleams() {
-    gleamSpots.forEach((spot, i) => {
-      // Create a unique movement pattern for each spot
-      const t = Date.now() / 1000;
-      const scale = 0.8 + Math.sin(t * 0.5 + i) * 0.2;
-      const opacity = 0.5 + Math.sin(t * 0.7 + i * 2) * 0.5;
-      
-      spot.style.transform = `scale(${scale})`;
-      spot.style.opacity = opacity;
+  // Add animation to buttons
+  document.querySelectorAll('.official-button').forEach(button => {
+    button.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-2px)';
+      this.style.boxShadow = '0 5px 15px rgba(37, 99, 235, 0.4)';
     });
     
-    requestAnimationFrame(animateGleams);
-  }
+    button.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.boxShadow = '';
+    });
+    
+    button.addEventListener('mousedown', function() {
+      this.style.transform = 'translateY(0)';
+      this.style.boxShadow = '0 2px 5px rgba(37, 99, 235, 0.4)';
+    });
+    
+    button.addEventListener('mouseup', function() {
+      this.style.transform = 'translateY(-2px)';
+      this.style.boxShadow = '0 5px 15px rgba(37, 99, 235, 0.4)';
+    });
+  });
   
-  animateGleams();
+  // Initialize modal functionality
+  document.querySelectorAll('.modal').forEach(modal => {
+    // Close modal when clicking outside the content
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      }
+    });
+  });
 }
